@@ -155,6 +155,37 @@ The generator also emits **`public/data.json`** — a clean, machine-readable sn
 
 Nothing personal is ever stored — only public homepage markup is analysed.
 
+## 🔌 API
+
+A paid REST API (`api/`) serves the **full, named** dataset (the public site is soft — paying is how you see everything). Auth is by API key (stored hashed); tiers are billed via **Stripe**.
+
+| Tier | Price | Rate limit |
+|------|-------|-----------|
+| Free | — | 100 req/day |
+| Starter | $29/mo | 5,000/day |
+| Pro | $99/mo | 50,000/day |
+| Bulk | $299/mo | 500,000/day |
+
+**Endpoints**
+
+| Method | Path | Auth | Purpose |
+|--------|------|------|---------|
+| POST | `/v1/signup` | — | Get a free API key (shown once) |
+| GET | `/v1/sites` | key | Ranked scores (`?limit=&offset=`) |
+| GET | `/v1/sites/:domain` | key | Full report + findings |
+| GET | `/v1/usage` | key | Your tier + limit |
+| POST | `/v1/billing/checkout` | — | Stripe Checkout URL (`{tier,email}`) |
+| POST | `/v1/billing/portal` | — | Stripe customer portal |
+| POST | `/webhooks/stripe` | sig | Entitlement sync (signature-verified) |
+
+```bash
+KEY=$(curl -s -X POST $API/v1/signup -H 'content-type: application/json' \
+  -d '{"email":"you@co.com"}' | jq -r .api_key)
+curl $API/v1/sites/example.eu -H "Authorization: Bearer $KEY"
+```
+
+**Run it:** `npm run api` (config from `api/.env.example`). API keys are stored **hashed**; Stripe secrets are **env-only**, never committed; the webhook verifies the Stripe signature. Deploys as a **separate** Render web service (it's dynamic — the directory above stays static).
+
 ## 🚀 Deploy
 
 The output is static HTML, so it deploys **anywhere**. A `render.yaml` blueprint is included.
@@ -197,7 +228,7 @@ Seed lists live in `seeds/`. Add mid-market EU e-commerce domains to `seeds/eaa-
 - [x] SQLite dataset (latest + history)
 - [x] Static directory: leaderboard, per-store reports, methodology, `data.json`
 - [x] `soft` / `named` reputational toggle
-- [ ] **Paid REST API** + tiers (the `data.json` shape is the precursor)
+- [x] **Paid REST API** + Stripe-billed tiers (`api/`)
 - [ ] **Country + category** enrichment (long-tail SEO + filters)
 - [ ] **Metered / pay-per-call** endpoint for AI agents
 - [ ] Scheduled auto-refresh (n8n) → the index compounds untouched

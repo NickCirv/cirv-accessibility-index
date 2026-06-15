@@ -1,3 +1,8 @@
+# secrets — never commit
+.env
+*.env
+api/.env
+
 # dependencies
 node_modules/
 
