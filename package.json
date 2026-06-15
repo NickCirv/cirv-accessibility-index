@@ -6,7 +6,7 @@
   "type": "commonjs",
   "homepage": "https://github.com/NickCirv/cirv-accessibility-index",
   "repository": { "type": "git", "url": "https://github.com/NickCirv/cirv-accessibility-index.git" },
-  "engines": { "node": ">=18" },
+  "engines": { "node": "22.x" },
   "scripts": {
     "test": "node test.js",
     "crawl": "node bin/crawl.js",
