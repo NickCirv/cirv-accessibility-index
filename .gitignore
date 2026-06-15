@@ -19,3 +19,7 @@ scanner/
 
 # os
 .DS_Store
+
+# local tooling — never publish
+.claude/
+.engram/
