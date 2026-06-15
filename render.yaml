@@ -1,0 +1,24 @@
+# Render Blueprint — deploys the directory as a static site.
+# The build crawls the seed list fresh, then generates static HTML into ./public.
+# Flip MODE to "named" in the Render dashboard when you're ready to publish D/F brands.
+services:
+  - type: web
+    name: cirv-accessibility-index
+    runtime: static
+    buildCommand: npm ci && node bin/crawl.js seeds/eaa-ecommerce.json --concurrency 5 && node bin/build-site.js --mode $MODE --base https://$RENDER_EXTERNAL_HOSTNAME
+    staticPublishPath: ./public
+    pullRequestPreviewsEnabled: false
+    envVars:
+      - key: MODE
+        value: soft
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      - type: rewrite
+        source: /
+        destination: /index.html

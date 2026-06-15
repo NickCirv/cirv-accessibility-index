@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" role="img" aria-label="Cirv Accessibility Index">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1712"/>
+      <stop offset="0.55" stop-color="#103a25"/>
+      <stop offset="1" stop-color="#1f7a4d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#56d68a"/>
+      <stop offset="1" stop-color="#a7f3c6"/>
+    </linearGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="340" fill="url(#bg)"/>
+  <rect width="1200" height="340" fill="url(#dots)"/>
+  <rect x="0" y="0" width="8" height="340" fill="url(#accent)"/>
+
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+    <text x="64" y="118" fill="#a7f3c6" font-size="22" font-weight="600" letter-spacing="3">CIRVGREEN · OPEN DATA</text>
+    <text x="62" y="196" fill="#ffffff" font-size="74" font-weight="800" letter-spacing="-1">Accessibility Index</text>
+    <text x="64" y="248" fill="#cfe9da" font-size="27" font-weight="500">The open WCAG / EAA compliance index for EU e-commerce.</text>
+    <text x="64" y="292" fill="#7fb89a" font-size="19" font-weight="500">Crawl · Score · Publish · Self-promote — no ads, no babysitting.</text>
+  </g>
+
+  <!-- grade badges motif -->
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-weight="800" font-size="38" text-anchor="middle">
+    <rect x="980" y="96" width="64" height="64" rx="14" fill="#1f7a4d"/><text x="1012" y="139" fill="#fff">A</text>
+    <rect x="1056" y="96" width="64" height="64" rx="14" fill="#c79a1e"/><text x="1088" y="139" fill="#fff">C</text>
+    <rect x="980" y="172" width="64" height="64" rx="14" fill="#c0392b"/><text x="1012" y="215" fill="#fff">F</text>
+    <rect x="1056" y="172" width="64" height="64" rx="14" fill="#103a25" stroke="#56d68a" stroke-width="2"/><text x="1088" y="213" fill="#a7f3c6" font-size="30">?</text>
+  </g>
+</svg>

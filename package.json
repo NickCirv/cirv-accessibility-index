@@ -1,0 +1,22 @@
+{
+  "name": "cirv-accessibility-index",
+  "version": "0.1.0",
+  "description": "Open WCAG / EAA accessibility compliance index for EU e-commerce — crawler, dataset, and self-publishing directory.",
+  "license": "MIT",
+  "type": "commonjs",
+  "homepage": "https://github.com/NickCirv/cirv-accessibility-index",
+  "repository": { "type": "git", "url": "https://github.com/NickCirv/cirv-accessibility-index.git" },
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node test.js",
+    "crawl": "node bin/crawl.js",
+    "report": "node bin/report.js",
+    "build": "node bin/build-site.js",
+    "refresh": "node bin/crawl.js seeds/eaa-ecommerce.json && node bin/build-site.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "better-sqlite3": "^11.3.0",
+    "cheerio": "^1.0.0"
+  }
+}
