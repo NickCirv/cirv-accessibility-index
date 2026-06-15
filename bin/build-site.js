@@ -17,8 +17,14 @@ const args = process.argv.slice(2);
 const dbPath = argVal(args, '--db') || path.join(__dirname, '..', 'data', 'index.db');
 const outDir = argVal(args, '--out') || path.join(__dirname, '..', 'public');
 const base = argVal(args, '--base');
+const apiUrl = argVal(args, '--api-url');
+const mode = argVal(args, '--mode');
+const opts = {};
+if (base) opts.base = base;
+if (apiUrl) opts.apiUrl = apiUrl;
+if (mode) opts.mode = mode;
 
 const db = openStore(dbPath);
-const res = buildSite(db, outDir, base ? { base } : {});
+const res = buildSite(db, outDir, opts);
 db.close();
 console.log(`built ${res.pages} pages (${res.scored} scored / ${res.total} domains) -> ${outDir}`);

@@ -5,50 +5,93 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Is boohoo.com accessible? — WCAG / EAA compliance report</title>
 <meta name="description" content="boohoo.com scored 67/100 (grade C) on an automated WCAG 2.1 homepage scan. 2 issues found. EAA compliance report.">
-<link rel="canonical" href="https://index.cirvgreen.com/sites/boohoo.com.html">
+<link rel="canonical" href="https://cirv-accessibility-index.onrender.com/sites/boohoo.com.html">
 <meta property="og:title" content="Is boohoo.com accessible? — WCAG / EAA compliance report">
 <meta property="og:description" content="boohoo.com scored 67/100 (grade C) on an automated WCAG 2.1 homepage scan. 2 issues found. EAA compliance report.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://index.cirvgreen.com/sites/boohoo.com.html">
+<meta property="og:url" content="https://cirv-accessibility-index.onrender.com/sites/boohoo.com.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0f1b15;--muted:#5b6b62;--line:#e3eae5;--bg:#f7faf8;--card:#fff;--accent:#1f7a4d;--accent-d:#155c39}
-*{box-sizing:border-box}body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
-.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:#fff;padding:8px;z-index:10}
-a{color:var(--accent-d)}a:hover{color:var(--accent)}
-.wrap{max-width:960px;margin:0 auto;padding:0 20px}
-header.site{border-bottom:1px solid var(--line);background:var(--card)}
-header.site .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 20px}
-.brand{font-weight:700;color:var(--ink);text-decoration:none;font-size:1.05rem}
-.brand span{color:var(--accent)}
-nav a{margin-left:18px;text-decoration:none;font-size:.95rem}
-.hero{padding:48px 0 24px}.hero h1{font-size:2rem;line-height:1.2;margin:0 0 12px}
-.hero p{color:var(--muted);font-size:1.1rem;max-width:60ch;margin:0 0 8px}
-.stats{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;min-width:120px}
-.stat b{display:block;font-size:1.5rem}.stat span{color:var(--muted);font-size:.85rem}
-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);font-size:.95rem}
-th{background:#eef4f0;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
-tr:last-child td{border-bottom:0}
-.badge{display:inline-block;min-width:2.2em;text-align:center;padding:2px 8px;border-radius:6px;font-weight:700;color:#fff}
-.g-a{background:#1f7a4d}.g-b{background:#4f9d52}.g-c{background:#c79a1e}.g-d{background:#d4762a}.g-f{background:#c0392b}.g-x{background:#9aa6a0}
-.search{margin:18px 0;padding:10px 14px;border:1px solid var(--line);border-radius:10px;width:100%;max-width:340px;font-size:1rem}
-.report-hero{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:32px 0}
-.score-big{font-size:3.4rem;font-weight:800;line-height:1}
-.findings li{margin:8px 0}.fail{color:#b03a2e}.pass{color:var(--accent-d)}
-.snippet{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;background:#f0f4f1;padding:1px 5px;border-radius:4px;color:#3a4a42;word-break:break-all}
-.cta{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:20px;margin:28px 0}
-.cta a.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:600;margin-top:8px}
-.note{color:var(--muted);font-size:.9rem}
-footer.site{border-top:1px solid var(--line);margin-top:48px;padding:28px 0;color:var(--muted);font-size:.9rem;background:var(--card)}
+:root{
+  --paper:#fff;--paper-2:#fafafa;
+  --ink:#14171a;--ink-2:#3f464c;--muted:#6b7280;
+  --line:#e6e8ea;--line-2:#cfd3d6;--rule:#14171a;
+  --accent:#1f7a4d;--accent-d:#155c39;--accent-wash:#f0f6f2;
+  --radius:0;--radius-btn:3px;--ease:cubic-bezier(.23,1,.32,1);--maxw:1040px;
+}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Inter Tight','Inter',sans-serif;letter-spacing:-.02em;line-height:1.06;color:var(--ink);font-weight:680;margin:0}
+a{color:var(--accent-d);text-decoration:none}a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--paper);padding:8px 12px;border:1px solid var(--ink);z-index:20}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+header.site{border-bottom:1px solid var(--rule);position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.1) blur(6px);z-index:10}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-family:'Inter Tight',sans-serif;font-weight:700;letter-spacing:-.01em;color:var(--ink);font-size:1.06rem}
+.brand b{color:var(--accent)}
+nav.primary{display:flex;gap:24px}nav.primary a{color:var(--ink-2);font-size:.92rem;font-weight:500}nav.primary a:hover{color:var(--accent);text-decoration:none}
+.hero{padding:72px 0 8px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-d);margin:0 0 18px}
+.hero h1{font-size:clamp(2.4rem,5.2vw,4rem);margin:0 0 18px;max-width:17ch}
+.lead{font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--ink-2);max-width:62ch;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);margin:40px 0 8px}
+.stat{padding:22px 20px;border-left:1px solid var(--line)}.stat:first-child{border-left:0}
+.stat b{display:block;font-family:'Inter Tight',sans-serif;font-variant-numeric:tabular-nums;font-size:2.1rem;font-weight:700;line-height:1;letter-spacing:-.02em}
+.stat span{display:block;margin-top:8px;font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.search{margin:30px 0 0;padding:11px 14px;border:1px solid var(--line-2);background:var(--paper);width:100%;max-width:360px;font-size:.95rem;font-family:inherit;border-radius:var(--radius)}
+.search:focus{border-color:var(--accent);outline:none}
+.tbl-wrap{margin-top:14px;border:1px solid var(--rule);overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;padding:13px 16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);font-weight:600;white-space:nowrap}
+tbody td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:.95rem;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}tbody tr{transition:background .12s var(--ease)}tbody tr:hover{background:var(--paper-2)}
+td.rank,td.score{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;color:var(--ink-2)}td.score{font-weight:600;color:var(--ink)}
+.badge{display:inline-block;min-width:1.9em;text-align:center;padding:3px 7px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;color:#fff;border-radius:2px}
+.g-a{background:#1f7a4d}.g-b{background:#3f7d42}.g-c{background:#8a6500}.g-d{background:#b4531a}.g-f{background:#c0392b}.g-x{background:#6b7280}
+.report-hero{display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap;padding:44px 0 28px;border-bottom:1px solid var(--line)}
+.score-big{font-family:'Inter Tight',sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(3.4rem,8vw,5rem);font-weight:700;line-height:.9;letter-spacing:-.03em}
+.score-big small{font-size:1.05rem;color:var(--muted);font-weight:500}
+main h2{font-size:1.5rem;margin:44px 0 6px;letter-spacing:-.02em}
+.findings{list-style:none;padding:0;margin:18px 0}
+.findings li{padding:14px 0;border-bottom:1px solid var(--line)}.findings li:last-child{border-bottom:0}
+.lbl{font-weight:600}.fail .lbl{color:#b8341f}.pass .lbl{color:var(--accent-d)}
+.wcag{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted)}
+.snippet{display:inline-block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:.8rem;background:var(--paper-2);border:1px solid var(--line);padding:2px 6px;color:var(--ink-2);word-break:break-all;border-radius:2px}
+.cta{border:1px solid var(--rule);border-left:3px solid var(--accent);padding:24px 26px;margin:32px 0;background:var(--paper)}
+.cta strong{font-family:'Inter Tight',sans-serif;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 20px;font-weight:600;font-size:.95rem;border:1px solid var(--accent);border-radius:var(--radius-btn);cursor:pointer;transition:background .14s var(--ease),transform .14s var(--ease);font-family:inherit}
+.btn:hover{background:var(--accent-d);color:#fff;text-decoration:none}.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--accent-d)}.btn.ghost:hover{background:var(--accent-wash)}
+.btn:disabled{opacity:.55;cursor:wait}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);margin:32px 0}
+.tier{padding:26px 22px;border-left:1px solid var(--line);display:flex;flex-direction:column}.tier:first-child{border-left:0}
+.tier.feat{background:var(--accent-wash)}
+.tier h3{font-size:1.05rem}
+.tier .price{font-family:'Inter Tight',sans-serif;font-variant-numeric:tabular-nums;font-size:2rem;font-weight:700;letter-spacing:-.02em;margin:8px 0 2px}
+.tier .price small{font-size:.8rem;color:var(--muted);font-weight:500}
+.tier ul{list-style:none;padding:0;margin:14px 0 22px;font-size:.9rem;color:var(--ink-2);flex:1}
+.tier li{padding:5px 0;border-bottom:1px solid var(--line)}.tier li:last-child{border-bottom:0}
+.field{display:block;margin:12px 0}
+.field label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.field input{width:100%;max-width:380px;padding:11px 14px;border:1px solid var(--line-2);font-size:.95rem;font-family:inherit;border-radius:var(--radius)}
+.field input:focus{border-color:var(--accent);outline:none}
+.keybox{margin-top:14px;padding:14px;border:1px solid var(--accent);background:var(--accent-wash);font-family:'JetBrains Mono',monospace;font-size:.85rem;word-break:break-all}
+.msg{margin-top:10px;font-size:.9rem;min-height:1.2em}.msg.err{color:#b8341f}.msg.ok{color:var(--accent-d)}
+.note{color:var(--muted);font-size:.88rem}
+footer.site{border-top:1px solid var(--rule);margin-top:64px;padding:32px 0;color:var(--muted);font-size:.88rem}footer.site a{color:var(--ink-2)}
+@media (max-width:760px){.stats,.tiers{grid-template-columns:1fr 1fr}.stat,.tier{border-left:0;border-top:1px solid var(--line)}.stats .stat:nth-child(-n+2),.tiers .tier:nth-child(-n+2){border-top:0}}
+@media (max-width:480px){.stats{grid-template-columns:1fr}.stat{border-top:1px solid var(--line)}.stat:first-child{border-top:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Accessibility report for boohoo.com","url":"https://index.cirvgreen.com/sites/boohoo.com.html","dateModified":"2026-06-14","isPartOf":{"@type":"Dataset","name":"Cirv Accessibility Index","url":"https://index.cirvgreen.com/"},"about":{"@type":"WebSite","url":"https://boohoo.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Accessibility report for boohoo.com","url":"https://cirv-accessibility-index.onrender.com/sites/boohoo.com.html","dateModified":"2026-06-14","isPartOf":{"@type":"Dataset","name":"Cirv Accessibility Index","url":"https://cirv-accessibility-index.onrender.com/"},"about":{"@type":"WebSite","url":"https://boohoo.com/"}}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap">
-<a class="brand" href="/">Cirv <span>Accessibility Index</span></a>
-<nav aria-label="Primary"><a href="/">Index</a><a href="/methodology.html">Methodology</a><a href="https://cirv-a11y-scanner.onrender.com">Free scanner</a></nav>
+<a class="brand" href="/">Cirv <b>Index</b></a>
+<nav class="primary" aria-label="Primary"><a href="/">Index</a><a href="/pricing.html">Pricing &amp; API</a><a href="/methodology.html">Methodology</a><a href="https://cirv-a11y-scanner.onrender.com">Free scanner</a></nav>
 </div></header>
 <main id="main"><div class="wrap">
 

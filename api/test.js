@@ -39,7 +39,7 @@ function request(app, method, path, { headers = {}, body } = {}) {
   });
 }
 
-const ENV = { STRIPE_PRICE_STARTER: 'price_starter', STRIPE_PRICE_PRO: 'price_pro', STRIPE_WEBHOOK_SECRET: 'whsec', API_BASE_URL: 'https://x.test' };
+const ENV = { STRIPE_PRICE_STARTER: 'price_starter', STRIPE_PRICE_PRO: 'price_pro', STRIPE_WEBHOOK_SECRET: 'whsec', API_BASE_URL: 'https://x.test', CORS_ORIGINS: 'https://allowed.test' };
 const fakeStripe = {
   checkout: { sessions: { create: async () => ({ url: 'https://stripe.test/checkout' }) } },
   billingPortal: { sessions: { create: async () => ({ url: 'https://stripe.test/portal' }) } },
@@ -167,6 +167,18 @@ async function run() {
     const app = createApp({ db: seedDb(), stripe: null, env: ENV });
     const r = await request(app, 'POST', '/v1/billing/checkout', { body: { tier: 'starter', email: 'x@y.com' } });
     assert.strictEqual(r.status, 503);
+  });
+
+  await t('CORS: preflight allowed origin → 204 + ACAO header', async () => {
+    const app = createApp({ db: seedDb(), stripe: fakeStripe, env: ENV });
+    const pre = await request(app, 'OPTIONS', '/v1/sites', { headers: { origin: 'https://allowed.test', 'access-control-request-method': 'GET' } });
+    assert.strictEqual(pre.status, 204);
+    assert.strictEqual(pre.headers['access-control-allow-origin'], 'https://allowed.test');
+  });
+  await t('CORS: unlisted origin gets no ACAO header', async () => {
+    const app = createApp({ db: seedDb(), stripe: fakeStripe, env: ENV });
+    const r = await request(app, 'GET', '/healthz', { headers: { origin: 'https://evil.test' } });
+    assert.strictEqual(r.headers['access-control-allow-origin'], undefined);
   });
 
   console.log(`\n${pass} passed, ${fail} failed`);

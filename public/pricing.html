@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Is cdiscount.com accessible? — WCAG / EAA compliance report</title>
-<meta name="description" content="cdiscount.com scored 80/100 (grade B) on an automated WCAG 2.1 homepage scan. 1 issues found. EAA compliance report.">
-<link rel="canonical" href="https://cirv-accessibility-index.onrender.com/sites/cdiscount.com.html">
-<meta property="og:title" content="Is cdiscount.com accessible? — WCAG / EAA compliance report">
-<meta property="og:description" content="cdiscount.com scored 80/100 (grade B) on an automated WCAG 2.1 homepage scan. 1 issues found. EAA compliance report.">
+<title>API &amp; Pricing — Cirv Accessibility Index</title>
+<meta name="description" content="Programmatic access to the EU e-commerce accessibility dataset. Free tier + Starter/Pro/Bulk plans. Scores, grades, and WCAG findings by API.">
+<link rel="canonical" href="https://cirv-accessibility-index.onrender.com/pricing.html">
+<meta property="og:title" content="API &amp; Pricing — Cirv Accessibility Index">
+<meta property="og:description" content="Programmatic access to the EU e-commerce accessibility dataset. Free tier + Starter/Pro/Bulk plans. Scores, grades, and WCAG findings by API.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://cirv-accessibility-index.onrender.com/sites/cdiscount.com.html">
+<meta property="og:url" content="https://cirv-accessibility-index.onrender.com/pricing.html">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -85,7 +85,7 @@ footer.site{border-top:1px solid var(--rule);margin-top:64px;padding:32px 0;colo
 @media (max-width:480px){.stats{grid-template-columns:1fr}.stat{border-top:1px solid var(--line)}.stat:first-child{border-top:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Accessibility report for cdiscount.com","url":"https://cirv-accessibility-index.onrender.com/sites/cdiscount.com.html","dateModified":"2026-06-14","isPartOf":{"@type":"Dataset","name":"Cirv Accessibility Index","url":"https://cirv-accessibility-index.onrender.com/"},"about":{"@type":"WebSite","url":"https://cdiscount.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Cirv Accessibility Index — API & pricing","url":"https://cirv-accessibility-index.onrender.com/pricing.html","isPartOf":{"@type":"Dataset","name":"Cirv Accessibility Index","url":"https://cirv-accessibility-index.onrender.com/"}}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -95,29 +95,85 @@ footer.site{border-top:1px solid var(--rule);margin-top:64px;padding:32px 0;colo
 </div></header>
 <main id="main"><div class="wrap">
 
-<nav class="note" aria-label="Breadcrumb"><a href="/">Index</a> › cdiscount.com</nav>
-<section class="report-hero">
-<div><span class="badge g-b" style="font-size:1.4rem;padding:6px 14px">B</span></div>
-<div><div class="score-big">80<span class="note" style="font-size:1rem">/100</span></div>
-<div class="note">1 failed · 4 passed checks</div></div>
+<section class="hero">
+<p class="eyebrow">Developer API</p>
+<h1>Accessibility data, by API</h1>
+<p class="lead">Programmatic access to the full, named EU e-commerce accessibility dataset — scores, grades, and per-site WCAG findings. Start free in seconds; upgrade when you need volume.</p>
 </section>
 
-<h1>Is cdiscount.com accessible?</h1>
-<p>Automated WCAG 2.1 A/AA homepage scan of <a href="https://cdiscount.com/" rel="nofollow">cdiscount.com</a>, last checked 2026-06-14. This matters for <strong>European Accessibility Act (EAA)</strong> compliance.</p>
-
-<h2>Issues found</h2>
-<ul class="findings"><li class="fail"><strong>Heading Hierarchy</strong> — No headings found. Pages should have a heading structure. <span class="note">[A (1.3.1)]</span></li></ul>
-
-<div class="cta">
-<strong>Selling into the EU? These issues are EAA exposure.</strong><br>
-Fix them on WordPress with Cirv Guard, or re-scan any page live.
-<br><a class="btn" href="https://wordpress.org/plugins/cirv-guard/">Fix it with Cirv Guard</a>
-&nbsp;<a href="https://cirv-a11y-scanner.onrender.com">Re-scan live →</a>
+<div id="getkey-form" class="cta">
+<strong>Start free</strong>
+<p class="note">100 requests/day, no card required. Your key is shown once — copy it.</p>
+<div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@company.com" autocomplete="email"></div>
+<button class="btn" id="getkey" type="button">Get a free key</button>
+<div id="msg" class="msg" role="status" aria-live="polite"></div>
+<div id="keybox" class="keybox" style="display:none" aria-live="polite"></div>
 </div>
 
-<h2>Passing checks</h2><ul class="findings"><li class="pass">Alt Text — No images found on page</li><li class="pass">Color Contrast — No inline color pairs found to check</li><li class="pass">Form Labels — No form inputs found on page</li><li class="pass">Link Text — No links found on page</li></ul>
+<h2>Plans</h2>
+<div class="tiers">
+<div class="tier">
+<h3>Free</h3><div class="price num">$0</div>
+<ul><li>100 requests / day</li><li>Scores &amp; grades</li><li>Per-site findings</li><li>Community support</li></ul>
+<a class="btn ghost" href="#getkey-form">Get free key</a>
+</div>
+<div class="tier">
+<h3>Starter</h3><div class="price num">$29<small>/mo</small></div>
+<ul><li>5,000 requests / day</li><li>Full named dataset</li><li>Per-site findings</li><li>Email support</li></ul>
+<button class="btn" type="button" data-tier="starter">Subscribe</button>
+</div>
+<div class="tier feat">
+<h3>Pro</h3><div class="price num">$99<small>/mo</small></div>
+<ul><li>50,000 requests / day</li><li>Everything in Starter</li><li>History &amp; trends</li><li>Priority support</li></ul>
+<button class="btn" type="button" data-tier="pro">Subscribe</button>
+</div>
+<div class="tier">
+<h3>Bulk</h3><div class="price num">$299<small>/mo</small></div>
+<ul><li>500,000 requests / day</li><li>Everything in Pro</li><li>Bulk export</li><li>SLA on request</li></ul>
+<button class="btn" type="button" data-tier="bulk">Subscribe</button>
+</div>
+</div>
 
-<p class="note">Automated homepage scan only — not a full WCAG audit and not legal advice. <a href="/methodology.html">How we score</a>.</p>
+<h2>Endpoints</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Method</th><th>Path</th><th>Returns</th></tr></thead>
+<tbody>
+<tr><td class="rank">GET</td><td><span class="snippet">/v1/sites</span></td><td>Ranked scores</td></tr>
+<tr><td class="rank">GET</td><td><span class="snippet">/v1/sites/:domain</span></td><td>Full report + findings</td></tr>
+<tr><td class="rank">GET</td><td><span class="snippet">/v1/usage</span></td><td>Your tier + limit</td></tr>
+</tbody>
+</table></div>
+<p class="note">Authenticate with <span class="snippet">Authorization: Bearer &lt;key&gt;</span>. Keys are stored hashed; payments run through Stripe. Full docs: <a href="https://github.com/NickCirv/cirv-accessibility-index#-api">README</a>.</p>
+
+<script>
+(function(){
+var API="https://cirv-index-api.onrender.com";
+var email=document.getElementById('email'),msg=document.getElementById('msg'),keybox=document.getElementById('keybox');
+function setMsg(t,err){msg.textContent=t;msg.className='msg'+(err?' err':' ok');}
+function emailOK(v){return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);}
+function offline(){setMsg('Could not reach the API — it may be waking up. Try again in ~30s.',true);}
+document.getElementById('getkey').addEventListener('click',function(){
+  var e=email.value.trim();
+  if(!emailOK(e)){setMsg('Enter a valid email.',true);return;}
+  setMsg('Creating your key…');
+  fetch(API+'/v1/signup',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:e})})
+    .then(function(r){return r.json();})
+    .then(function(j){if(j.api_key){keybox.textContent=j.api_key;keybox.style.display='block';setMsg('Key created — copy it now, it is shown only once.');}else{setMsg(j.message||'A key already exists for that email.',false);}})
+    .catch(offline);
+});
+[].forEach.call(document.querySelectorAll('[data-tier]'),function(btn){
+  btn.addEventListener('click',function(){
+    var e=email.value.trim();
+    if(!emailOK(e)){setMsg('Enter your email above first.',true);email.focus();return;}
+    btn.disabled=true;setMsg('Opening secure checkout…');
+    fetch(API+'/v1/billing/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({tier:btn.getAttribute('data-tier'),email:e})})
+      .then(function(r){return r.json();})
+      .then(function(j){if(j.url){window.location.href=j.url;}else{setMsg(j.error||'Checkout unavailable.',true);btn.disabled=false;}})
+      .catch(function(){offline();btn.disabled=false;});
+  });
+});
+})();
+</script>
 </div></main>
 <footer class="site"><div class="wrap">
 Cirv Accessibility Index — an open WCAG/EAA compliance index for EU e-commerce. Automated homepage scans against WCAG 2.1 A/AA criteria. Not legal advice. Built by <a href="https://cirvgreen.com">Cirvgreen</a>.

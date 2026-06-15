@@ -5,7 +5,7 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { buildSite, renderSite, esc, grade, topIssue } = require('./src/site');
+const { buildSite, renderSite, renderPricing, esc, grade, topIssue } = require('./src/site');
 const { pLimit } = require('./src/limit');
 const { parseRobots, matchRule } = require('./src/robots');
 const { openStore, recordScan, latestScans, countScans } = require('./src/store');
@@ -234,6 +234,7 @@ async function run() {
     assert(fs.existsSync(path.join(out, 'index.html')));
     assert(fs.existsSync(path.join(out, 'sites', 'good.com.html')));
     assert(fs.existsSync(path.join(out, 'methodology.html')));
+    assert(fs.existsSync(path.join(out, 'pricing.html')));
     assert(fs.existsSync(path.join(out, 'sitemap.xml')));
     assert(fs.existsSync(path.join(out, 'robots.txt')));
     const data = JSON.parse(fs.readFileSync(path.join(out, 'data.json'), 'utf-8'));
@@ -267,6 +268,14 @@ async function run() {
     fs.rmSync(soft, { recursive: true, force: true });
     fs.rmSync(named, { recursive: true, force: true });
     db.close();
+  });
+
+  t('renderPricing wires tiers + the API url', () => {
+    const html = renderPricing({ apiUrl: 'https://api.test' });
+    assert(html.includes('data-tier="pro"'), 'has a subscribe button');
+    assert(html.includes('"https://api.test"'), 'embeds the API base');
+    assert(html.includes('Get a free key'), 'has the free-key form');
+    assert(html.includes('/v1/billing/checkout'), 'calls checkout');
   });
 
   console.log(`\n${pass} passed, ${fail} failed`);

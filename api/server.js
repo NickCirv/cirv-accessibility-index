@@ -87,6 +87,25 @@ function createApp(opts) {
     return res.json({ received: true });
   });
 
+  // CORS — the pricing page (static directory, different origin) calls this API
+  // from the browser. Allow-list origins via CORS_ORIGINS (comma-separated), or '*'.
+  const allowed = String(env.CORS_ORIGINS || 'https://cirv-accessibility-index.onrender.com')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin && (allowed.includes('*') || allowed.includes(origin))) {
+      res.set('Access-Control-Allow-Origin', allowed.includes('*') ? '*' : origin);
+      res.set('Vary', 'Origin');
+      res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.set('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+      res.set('Access-Control-Max-Age', '86400');
+    }
+    if (req.method === 'OPTIONS') return res.status(204).end();
+    next();
+  });
+
   app.use(express.json({ limit: '16kb' }));
 
   app.get('/healthz', (_req, res) => res.json({ ok: true }));
