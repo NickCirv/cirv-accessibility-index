@@ -4,9 +4,9 @@
 
 <p align="center">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-1f7a4d" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/node-%3E%3D18-1f7a4d" alt="Node >= 18">
-  <img src="https://img.shields.io/badge/tests-24%20passing-2ea043" alt="24 tests passing">
-  <img src="https://img.shields.io/badge/dependencies-3-2ea043" alt="3 dependencies">
+  <a href="https://github.com/NickCirv/cirv-accessibility-index/actions/workflows/ci.yml"><img src="https://github.com/NickCirv/cirv-accessibility-index/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <img src="https://img.shields.io/badge/tests-41%20passing-2ea043" alt="41 tests passing">
+  <img src="https://img.shields.io/badge/node-22.x-1f7a4d" alt="Node 22">
   <img src="https://img.shields.io/badge/promotion-organic%20only-1f7a4d" alt="No paid ads">
   <img src="https://img.shields.io/badge/WCAG-2.1%20A%2FAA-0c1712" alt="WCAG 2.1 A/AA">
   <a href="./CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-8957e5" alt="PRs welcome"></a>
@@ -24,6 +24,12 @@
   <a href="#-what-it-stores">Data</a> ·
   <a href="#-deploy">Deploy</a> ·
   <a href="#-roadmap">Roadmap</a>
+</p>
+
+<p align="center">
+  <b>Live:</b> <a href="https://cirv-accessibility-index.onrender.com">directory</a> ·
+  <a href="https://cirv-accessibility-index.onrender.com/pricing.html">pricing &amp; API</a> ·
+  <a href="https://cirv-index-api.onrender.com/healthz">API status</a>
 </p>
 
 ---
@@ -188,27 +194,28 @@ curl $API/v1/sites/example.eu -H "Authorization: Bearer $KEY"
 
 ## 🚀 Deploy
 
-The output is static HTML, so it deploys **anywhere**. A `render.yaml` blueprint is included.
+The directory is a **static site** (the prebuilt `public/` is committed — nothing to build at deploy). The API is a **separate dynamic service**.
 
-### Render (recommended — blueprint included)
-1. Push this repo to GitHub (done if you're reading it there).
-2. Render dashboard → **New → Blueprint** → pick this repo → **Apply**.
-3. Render runs the build (`crawl → generate`) and serves `./public`. You get a live `*.onrender.com` URL.
-4. **Custom domain (optional):** Render → your service → *Settings → Custom Domains*, add `index.cirvgreen.com`, then add the CNAME it gives you in Cloudflare.
+### Directory (static — any host)
+A `render.yaml` blueprint is included; it just serves `public/`.
+1. Render → **New → Blueprint** → pick this repo → **Apply** (no crawl/compile at deploy).
+2. Or any static host — Netlify / Cloudflare Pages / GitHub Pages / S3 — publish the `public/` folder.
+3. **Custom domain (optional):** add a `CNAME` for `index.cirvgreen.com`, then add it under the service's custom-domain settings.
 
-### Any static host (Netlify / Cloudflare Pages / GitHub Pages / S3)
+Refresh the data yourself, or let the weekly GitHub Action (`.github/workflows/refresh.yml`) do it:
 ```bash
-npm ci && npm run refresh     # produces ./public
-# then publish the ./public directory with your host of choice
+npm run refresh   # crawl seeds → rebuild public/ → commit
 ```
 
+### API (dynamic — separate service)
+Deploy `api/` as a Render **Web Service**: build `npm ci`, start `npm run api`, env from [`api/.env.example`](./api/.env.example). See the [API section](#-api).
+
 ### The named / soft switch
-The directory has a reputational safety toggle, set by the **`MODE`** env var (no code change):
+The published brands are set at **build time** (the directory is prebuilt):
+- **`soft`** *(default)* — names only A–C; D/F hidden behind a "scan to reveal" CTA.
+- **`named`** — every scored store, grades and all.
 
-- **`soft`** *(default)* — names only A–C stores; D/F are hidden behind a "scan to reveal" call-to-action.
-- **`named`** — publishes every scored store, grades and all.
-
-Flip `MODE` in your host's environment settings and redeploy when you're ready to go fully public.
+Rebuild named with `node bin/build-site.js --mode named` and commit `public/`.
 
 ## ⚙️ Configuration
 
