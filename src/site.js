@@ -18,6 +18,20 @@ const SCANNER_URL = 'https://cirv-a11y-scanner.onrender.com';
 const GUARD_URL = 'https://wordpress.org/plugins/cirv-guard/';
 const API_URL = 'https://cirv-index-api.onrender.com'; // override with --api-url
 
+// Cookieless analytics — no cookies, no PII. Set at build via
+// --analytics-provider / --analytics-id (or ANALYTICS_PROVIDER / ANALYTICS_ID env).
+let _analyticsSnippet = '';
+function renderAnalytics(provider, id) {
+  if (!id) return '';
+  if (provider === 'goatcounter') return `<script data-goatcounter="https://${esc(id)}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>`;
+  if (provider === 'plausible') return `<script defer data-domain="${esc(id)}" src="https://plausible.io/js/script.js"></script>`;
+  if (provider === 'cloudflare') return `<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"${esc(id)}"}'></script>`;
+  return '';
+}
+function setAnalytics(provider, id) {
+  _analyticsSnippet = renderAnalytics(provider, id);
+}
+
 // ---- pure helpers (exported for tests) ----
 function esc(v) {
   return String(v == null ? '' : v)
@@ -183,6 +197,7 @@ function layout({ title, description, canonical, jsonld, body }) {
 <meta property="og:type" content="website">
 <meta property="og:url" content="${esc(canonical)}">
 ${FONTS}
+${_analyticsSnippet}
 <style>${CSS}</style>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 </head>
@@ -695,6 +710,7 @@ function buildSite(db, outDir, opts = {}) {
 
   fs.mkdirSync(path.join(outDir, 'sites'), { recursive: true });
   const apiUrl = opts.apiUrl || API_URL;
+  if (opts.analytics && opts.analytics.id) setAnalytics(opts.analytics.provider, opts.analytics.id);
   fs.writeFileSync(path.join(outDir, 'index.html'), renderIndex(rows, { base, mode }));
   fs.writeFileSync(path.join(outDir, 'pricing.html'), renderPricing({ base, apiUrl }));
   fs.writeFileSync(path.join(outDir, 'report.html'), renderReport(rows, { base, mode }));
@@ -715,4 +731,4 @@ function buildSite(db, outDir, opts = {}) {
   return { outDir, pages: 2 + eligible.length, scored: ok.length, named: eligible.length, total: rows.length, mode };
 }
 
-module.exports = { buildSite, renderIndex, renderSite, renderMethodology, renderPricing, renderReport, esc, grade, topIssue, safeFile };
+module.exports = { buildSite, renderIndex, renderSite, renderMethodology, renderPricing, renderReport, renderAnalytics, esc, grade, topIssue, safeFile };

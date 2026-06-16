@@ -19,10 +19,13 @@ const outDir = argVal(args, '--out') || path.join(__dirname, '..', 'public');
 const base = argVal(args, '--base');
 const apiUrl = argVal(args, '--api-url');
 const mode = argVal(args, '--mode');
+const aProvider = argVal(args, '--analytics-provider') || process.env.ANALYTICS_PROVIDER;
+const aId = argVal(args, '--analytics-id') || process.env.ANALYTICS_ID;
 const opts = {};
 if (base) opts.base = base;
 if (apiUrl) opts.apiUrl = apiUrl;
 if (mode) opts.mode = mode;
+if (aProvider && aId) opts.analytics = { provider: aProvider, id: aId };
 
 const db = openStore(dbPath);
 const res = buildSite(db, outDir, opts);

@@ -5,7 +5,7 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { buildSite, renderSite, renderPricing, renderReport, esc, grade, topIssue } = require('./src/site');
+const { buildSite, renderSite, renderPricing, renderReport, renderAnalytics, esc, grade, topIssue } = require('./src/site');
 const { pLimit } = require('./src/limit');
 const { parseRobots, matchRule } = require('./src/robots');
 const { openStore, recordScan, latestScans, countScans } = require('./src/store');
@@ -291,6 +291,14 @@ async function run() {
     assert(/state-of-eu-accessibility-\d{4}\.pdf/.test(named), 'links the PDF');
     const soft = renderReport(rows, { mode: 'soft' });
     assert(!soft.includes('bad.com'), 'soft mode hides the F-grade brand');
+  });
+
+  t('renderAnalytics emits a cookieless snippet (or nothing without an id)', () => {
+    assert.strictEqual(renderAnalytics('goatcounter', ''), '', 'no id = no snippet');
+    const g = renderAnalytics('goatcounter', 'cirv');
+    assert(g.includes('cirv.goatcounter.com') && g.includes('gc.zgo.at'), 'goatcounter snippet');
+    assert(!g.toLowerCase().includes('cookie'), 'is cookieless');
+    assert(renderAnalytics('plausible', 'cirvgreen.com').includes('plausible.io'), 'plausible supported');
   });
 
   console.log(`\n${pass} passed, ${fail} failed`);
