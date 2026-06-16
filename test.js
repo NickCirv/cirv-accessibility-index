@@ -5,7 +5,7 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { buildSite, renderSite, renderPricing, esc, grade, topIssue } = require('./src/site');
+const { buildSite, renderSite, renderPricing, renderReport, esc, grade, topIssue } = require('./src/site');
 const { pLimit } = require('./src/limit');
 const { parseRobots, matchRule } = require('./src/robots');
 const { openStore, recordScan, latestScans, countScans } = require('./src/store');
@@ -235,6 +235,7 @@ async function run() {
     assert(fs.existsSync(path.join(out, 'sites', 'good.com.html')));
     assert(fs.existsSync(path.join(out, 'methodology.html')));
     assert(fs.existsSync(path.join(out, 'pricing.html')));
+    assert(fs.existsSync(path.join(out, 'report.html')));
     assert(fs.existsSync(path.join(out, 'sitemap.xml')));
     assert(fs.existsSync(path.join(out, 'robots.txt')));
     const data = JSON.parse(fs.readFileSync(path.join(out, 'data.json'), 'utf-8'));
@@ -276,6 +277,20 @@ async function run() {
     assert(html.includes('"https://api.test"'), 'embeds the API base');
     assert(html.includes('Get a free key'), 'has the free-key form');
     assert(html.includes('/v1/billing/checkout'), 'calls checkout');
+  });
+
+  t('renderReport aggregates the dataset (grades, failures, best/worst, PDF link)', () => {
+    const rows = [
+      { status: 'ok', domain: 'good.com', score: 100, results_json: JSON.stringify([{ status: 'pass', check: 'Alt Text' }]), scanned_at: 1 },
+      { status: 'ok', domain: 'bad.com', score: 20, results_json: JSON.stringify([{ status: 'fail', check: 'Alt Text' }, { status: 'fail', check: 'Link Text' }]), scanned_at: 1 },
+    ];
+    const named = renderReport(rows, { mode: 'named' });
+    assert(named.includes('The State of EU E-commerce Accessibility'), 'has title');
+    assert(named.includes('Grade A') && named.includes('Grade F'), 'has grade bars');
+    assert(named.includes('good.com') && named.includes('bad.com'), 'names best + worst in named mode');
+    assert(/state-of-eu-accessibility-\d{4}\.pdf/.test(named), 'links the PDF');
+    const soft = renderReport(rows, { mode: 'soft' });
+    assert(!soft.includes('bad.com'), 'soft mode hides the F-grade brand');
   });
 
   console.log(`\n${pass} passed, ${fail} failed`);

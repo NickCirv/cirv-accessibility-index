@@ -149,6 +149,21 @@ main h2{font-size:1.5rem;margin:44px 0 6px;letter-spacing:-.02em}
 .msg{margin-top:10px;font-size:.9rem;min-height:1.2em}.msg.err{color:#b8341f}.msg.ok{color:var(--accent-d)}
 .note{color:var(--muted);font-size:.88rem}
 footer.site{border-top:1px solid var(--rule);margin-top:64px;padding:32px 0;color:var(--muted);font-size:.88rem}footer.site a{color:var(--ink-2)}
+.bar-row{display:grid;grid-template-columns:128px 1fr 52px;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.bar-row:last-child{border-bottom:0}
+.bar-label{font-size:.86rem;color:var(--ink-2)}
+.bar-track{height:14px;background:var(--paper-2);border:1px solid var(--line);position:relative}
+.bar-fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent)}
+.bar-fill.g-a{background:#1f7a4d}.bar-fill.g-b{background:#3f7d42}.bar-fill.g-c{background:#8a6500}.bar-fill.g-d{background:#b4531a}.bar-fill.g-f{background:#c0392b}
+.bar-num{text-align:right;font-size:.86rem;color:var(--ink-2)}
+.report-lists{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin:18px 0}
+.report-lists h3{font-size:1rem;margin:0 0 8px}
+.report-lists ul{list-style:none;padding:0;margin:0}
+.report-lists li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.report-lists li:last-child{border-bottom:0}
+.bignum{font-family:'Inter Tight',sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(2.6rem,6vw,4rem);font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--accent-d)}
+@media (max-width:760px){.report-lists{grid-template-columns:1fr}.bar-row{grid-template-columns:88px 1fr 40px}}
+@media print{header.site,footer.site,.cta,.search,.skip{display:none!important}body{background:#fff;font-size:12px}a{color:#000;text-decoration:none}.stats,.tbl-wrap,.report-lists,.bar-row{break-inside:avoid}main h2{margin-top:22px}}
 @media (max-width:760px){.stats,.tiers{grid-template-columns:1fr 1fr}.stat,.tier{border-left:0;border-top:1px solid var(--line)}.stats .stat:nth-child(-n+2),.tiers .tier:nth-child(-n+2){border-top:0}}
 @media (max-width:480px){.stats{grid-template-columns:1fr}.stat{border-top:1px solid var(--line)}.stat:first-child{border-top:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -175,7 +190,7 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap">
 <a class="brand" href="/">Cirv <b>Index</b></a>
-<nav class="primary" aria-label="Primary"><a href="/">Index</a><a href="/pricing.html">Pricing &amp; API</a><a href="/methodology.html">Methodology</a><a href="${esc(SCANNER_URL)}">Free scanner</a></nav>
+<nav class="primary" aria-label="Primary"><a href="/">Index</a><a href="/report.html">Report</a><a href="/pricing.html">Pricing &amp; API</a><a href="/methodology.html">Methodology</a><a href="${esc(SCANNER_URL)}">Free scanner</a></nav>
 </div></header>
 <main id="main"><div class="wrap">
 ${body}
@@ -515,8 +530,132 @@ document.getElementById('getkey').addEventListener('click',function(){
   });
 }
 
+// Count how many sites fail each check (once per site) — "X stores fail alt text".
+function aggregateFailures(rows) {
+  const counts = {};
+  let sitesWithData = 0;
+  for (const r of rows) {
+    if (r.status !== 'ok' || !r.results_json) continue;
+    let res;
+    try {
+      res = JSON.parse(r.results_json);
+    } catch {
+      continue;
+    }
+    sitesWithData++;
+    const seen = new Set();
+    for (const x of res) {
+      if (x && x.status === 'fail' && x.check && !seen.has(x.check)) {
+        seen.add(x.check);
+        counts[x.check] = (counts[x.check] || 0) + 1;
+      }
+    }
+  }
+  return { counts, sitesWithData };
+}
+
+function renderReport(rows, opts = {}) {
+  const base = opts.base || DEFAULT_BASE;
+  const mode = opts.mode === 'named' ? 'named' : 'soft';
+  const ok = rows.filter((r) => r.status === 'ok');
+  const total = ok.length;
+  const avg = total ? Math.round(ok.reduce((s, r) => s + r.score, 0) / total) : 0;
+  const updated = rows.reduce((m, r) => Math.max(m, r.scanned_at || 0), 0);
+  const year = new Date(updated || Date.now()).getUTCFullYear();
+
+  const gradeCounts = { A: 0, B: 0, C: 0, D: 0, F: 0 };
+  for (const r of ok) gradeCounts[grade(r.score)]++;
+  const df = gradeCounts.D + gradeCounts.F;
+  const dfPct = total ? Math.round((df / total) * 100) : 0;
+
+  const { counts: failCounts, sitesWithData } = aggregateFailures(ok);
+  const failRows = Object.entries(failCounts).sort((a, b) => b[1] - a[1]);
+  const topFail = failRows[0];
+  const topFailPct = topFail && sitesWithData ? Math.round((topFail[1] / sitesWithData) * 100) : 0;
+
+  const sorted = [...ok].sort((a, b) => b.score - a.score);
+  const best = sorted.slice(0, 5);
+  const worst = sorted.slice(-5).reverse();
+
+  const bar = (label, count, max, cls) =>
+    `<div class="bar-row"><span class="bar-label">${esc(label)}</span><span class="bar-track"><span class="bar-fill ${cls || ''}" style="width:${max ? Math.round((count / max) * 100) : 0}%"></span></span><span class="bar-num num">${esc(count)}</span></div>`;
+  const maxGrade = Math.max(1, ...Object.values(gradeCounts));
+  const gradeBars = ['A', 'B', 'C', 'D', 'F'].map((g) => bar('Grade ' + g, gradeCounts[g], maxGrade, gradeClass(g))).join('');
+  const maxFail = failRows.length ? failRows[0][1] : 1;
+  const failBars = failRows.length
+    ? failRows.map(([k, v]) => bar(k, v, maxFail, 'g-f')).join('')
+    : '<p class="note">No failures recorded.</p>';
+
+  const nameOrHidden = (r) => {
+    const g = grade(r.score);
+    const named = mode === 'named' || !(g === 'D' || g === 'F');
+    return named ? `<a href="/sites/${esc(safeFile(r.domain))}.html">${esc(r.domain)}</a>` : '<span class="note">hidden — run a scan</span>';
+  };
+  const li = (r) => `<li><span class="badge ${gradeClass(grade(r.score))}">${esc(grade(r.score))}</span> ${nameOrHidden(r)} <span class="num note">${esc(r.score)}/100</span></li>`;
+
+  const jsonld = {
+    '@context': 'https://schema.org',
+    '@type': 'Report',
+    name: `The State of EU E-commerce Accessibility ${year}`,
+    datePublished: fmtDate(updated),
+    url: base + '/report.html',
+    publisher: { '@type': 'Organization', name: 'Cirvgreen', url: 'https://cirvgreen.com' },
+    about: 'WCAG 2.1 A/AA accessibility compliance of EU e-commerce homepages (European Accessibility Act).',
+  };
+
+  const body = `
+<section class="hero">
+<p class="eyebrow">Report · ${esc(year)}</p>
+<h1>The State of EU E-commerce Accessibility</h1>
+<p class="lead">We scanned ${esc(total)} European online stores against WCAG 2.1 A/AA — the standard behind the European Accessibility Act. Here's what we found.</p>
+<p style="margin-top:18px"><a class="btn" href="/state-of-eu-accessibility-${esc(year)}.pdf">Download the PDF</a> &nbsp;<span class="note">Updated ${esc(fmtDate(updated))}</span></p>
+</section>
+
+<div class="stats">
+<div class="stat"><b>${esc(total)}</b><span>stores analysed</span></div>
+<div class="stat"><b>${esc(avg)}<span class="note" style="font-size:1rem">/100</span></b><span>average score</span></div>
+<div class="stat"><b>${esc(dfPct)}%</b><span>graded D or F</span></div>
+<div class="stat"><b>${esc(topFailPct)}%</b><span>fail ${esc(topFail ? topFail[0].toLowerCase() : 'core checks')}</span></div>
+</div>
+
+<h2>The headline</h2>
+<p>Europe's online stores are <strong>not ready</strong>. The average homepage scores just <strong>${esc(avg)}/100</strong> on an automated WCAG 2.1 A/AA check, and <strong>${esc(dfPct)}% are graded D or F</strong>. ${topFail ? `The single most common failure is <strong>${esc(topFail[0].toLowerCase())}</strong>, affecting <strong>${esc(topFailPct)}%</strong> of the stores we could scan.` : ''} With the European Accessibility Act now enforceable, these are not cosmetic issues — they are legal exposure.</p>
+
+<h2>Grade distribution</h2>
+<div>${gradeBars}</div>
+
+<h2>The most common failures</h2>
+<p class="note">Share of scanned stores failing each WCAG check (homepage):</p>
+<div>${failBars}</div>
+
+<h2>Best and worst</h2>
+<div class="report-lists">
+<div><h3>Best in class</h3><ul>${best.map(li).join('')}</ul></div>
+<div><h3>Needs the most work</h3><ul>${worst.map(li).join('')}</ul></div>
+</div>
+
+<h2>What this means for the EAA</h2>
+<p>The European Accessibility Act requires e-commerce services sold into the EU to meet accessibility standards aligned with WCAG 2.1 AA. Non-compliance carries enforcement and penalty risk that varies by member state. An automated homepage scan catches only ~30–40% of issues — so a low score is a near-certain sign of deeper problems, and even a high score warrants a manual audit.</p>
+
+<div class="cta">
+<strong>Check your own store in seconds.</strong><br>
+Run the free scanner, or pull the full dataset via the API.
+<br><a class="btn" href="${esc(SCANNER_URL)}">Open the free scanner</a> &nbsp;<a href="/pricing.html">Get API access →</a>
+</div>
+
+<p class="note">Method: automated WCAG 2.1 A/AA scan of each store's public homepage. See <a href="/methodology.html">methodology</a>. Citable data: <a href="/data.json">data.json</a>. Not legal advice.</p>`;
+
+  return layout({
+    title: `The State of EU E-commerce Accessibility ${year} — Cirv Index`,
+    description: `${total} EU online stores scanned: average WCAG score ${avg}/100, ${dfPct}% graded D or F. The data behind European Accessibility Act readiness.`,
+    canonical: base + '/report.html',
+    jsonld,
+    body,
+  });
+}
+
 function renderSitemap(rows, base) {
-  const urls = [base + '/', base + '/pricing.html', base + '/methodology.html'].concat(
+  const urls = [base + '/', base + '/report.html', base + '/pricing.html', base + '/methodology.html'].concat(
     rows.map((r) => base + '/sites/' + safeFile(r.domain) + '.html')
   );
   return (
@@ -558,6 +697,7 @@ function buildSite(db, outDir, opts = {}) {
   const apiUrl = opts.apiUrl || API_URL;
   fs.writeFileSync(path.join(outDir, 'index.html'), renderIndex(rows, { base, mode }));
   fs.writeFileSync(path.join(outDir, 'pricing.html'), renderPricing({ base, apiUrl }));
+  fs.writeFileSync(path.join(outDir, 'report.html'), renderReport(rows, { base, mode }));
   fs.writeFileSync(path.join(outDir, 'methodology.html'), renderMethodology({ base }));
   for (const r of eligible) {
     fs.writeFileSync(path.join(outDir, 'sites', safeFile(r.domain) + '.html'), renderSite(r, { base }));
@@ -575,4 +715,4 @@ function buildSite(db, outDir, opts = {}) {
   return { outDir, pages: 2 + eligible.length, scored: ok.length, named: eligible.length, total: rows.length, mode };
 }
 
-module.exports = { buildSite, renderIndex, renderSite, renderMethodology, renderPricing, esc, grade, topIssue, safeFile };
+module.exports = { buildSite, renderIndex, renderSite, renderMethodology, renderPricing, renderReport, esc, grade, topIssue, safeFile };

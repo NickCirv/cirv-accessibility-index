@@ -81,6 +81,21 @@ main h2{font-size:1.5rem;margin:44px 0 6px;letter-spacing:-.02em}
 .msg{margin-top:10px;font-size:.9rem;min-height:1.2em}.msg.err{color:#b8341f}.msg.ok{color:var(--accent-d)}
 .note{color:var(--muted);font-size:.88rem}
 footer.site{border-top:1px solid var(--rule);margin-top:64px;padding:32px 0;color:var(--muted);font-size:.88rem}footer.site a{color:var(--ink-2)}
+.bar-row{display:grid;grid-template-columns:128px 1fr 52px;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.bar-row:last-child{border-bottom:0}
+.bar-label{font-size:.86rem;color:var(--ink-2)}
+.bar-track{height:14px;background:var(--paper-2);border:1px solid var(--line);position:relative}
+.bar-fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent)}
+.bar-fill.g-a{background:#1f7a4d}.bar-fill.g-b{background:#3f7d42}.bar-fill.g-c{background:#8a6500}.bar-fill.g-d{background:#b4531a}.bar-fill.g-f{background:#c0392b}
+.bar-num{text-align:right;font-size:.86rem;color:var(--ink-2)}
+.report-lists{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin:18px 0}
+.report-lists h3{font-size:1rem;margin:0 0 8px}
+.report-lists ul{list-style:none;padding:0;margin:0}
+.report-lists li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.report-lists li:last-child{border-bottom:0}
+.bignum{font-family:'Inter Tight',sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(2.6rem,6vw,4rem);font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--accent-d)}
+@media (max-width:760px){.report-lists{grid-template-columns:1fr}.bar-row{grid-template-columns:88px 1fr 40px}}
+@media print{header.site,footer.site,.cta,.search,.skip{display:none!important}body{background:#fff;font-size:12px}a{color:#000;text-decoration:none}.stats,.tbl-wrap,.report-lists,.bar-row{break-inside:avoid}main h2{margin-top:22px}}
 @media (max-width:760px){.stats,.tiers{grid-template-columns:1fr 1fr}.stat,.tier{border-left:0;border-top:1px solid var(--line)}.stats .stat:nth-child(-n+2),.tiers .tier:nth-child(-n+2){border-top:0}}
 @media (max-width:480px){.stats{grid-template-columns:1fr}.stat{border-top:1px solid var(--line)}.stat:first-child{border-top:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -91,7 +106,7 @@ footer.site{border-top:1px solid var(--rule);margin-top:64px;padding:32px 0;colo
 <a class="skip" href="#main">Skip to content</a>
 <header class="site"><div class="wrap">
 <a class="brand" href="/">Cirv <b>Index</b></a>
-<nav class="primary" aria-label="Primary"><a href="/">Index</a><a href="/pricing.html">Pricing &amp; API</a><a href="/methodology.html">Methodology</a><a href="https://cirv-a11y-scanner.onrender.com">Free scanner</a></nav>
+<nav class="primary" aria-label="Primary"><a href="/">Index</a><a href="/report.html">Report</a><a href="/pricing.html">Pricing &amp; API</a><a href="/methodology.html">Methodology</a><a href="https://cirv-a11y-scanner.onrender.com">Free scanner</a></nav>
 </div></header>
 <main id="main"><div class="wrap">
 
