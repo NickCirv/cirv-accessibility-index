@@ -27,7 +27,7 @@ jobs:
       - name: Crawl
         run: node bin/crawl.js seeds/eaa-ecommerce.json --concurrency 5
       - name: Build site
-        run: node bin/build-site.js --base https://cirv-accessibility-index.onrender.com --analytics-provider goatcounter --analytics-id cirvgreen
+        run: node bin/build-site.js --base https://index.cirvgreen.com --analytics-provider goatcounter --analytics-id cirvgreen
       - name: Commit refreshed site
         run: |
           git config user.name "github-actions[bot]"
