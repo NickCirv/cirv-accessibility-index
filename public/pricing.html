@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="Programmatic access to the EU e-commerce accessibility dataset. Free tier + Starter/Pro/Bulk plans. Scores, grades, and WCAG findings by API.">
 <meta name="twitter:image" content="https://index.cirvgreen.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<script data-goatcounter="https://cirvgreen.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 <style>
 :root{
   --paper:#fff;--paper-2:#fafafa;
@@ -189,10 +189,11 @@ a.btn:hover{box-shadow:0 8px 22px rgba(31,122,77,.25)}
 <script>
 (function(){
 var API="https://cirv-index-api.onrender.com";
+setTimeout(function(){try{fetch(API+'/healthz').then(function(){},function(){});}catch(e){}},100);
 var email=document.getElementById('email'),msg=document.getElementById('msg'),keybox=document.getElementById('keybox');
 function setMsg(t,err){msg.textContent=t;msg.className='msg'+(err?' err':' ok');}
 function emailOK(v){return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);}
-function offline(){setMsg('Could not reach the API — it may be waking up. Try again in ~30s.',true);}
+function offline(){setMsg('The API is waking up (free tier, ~20s) — give it a moment and click again.',true);}
 document.getElementById('getkey').addEventListener('click',function(){
   var e=email.value.trim();
   if(!emailOK(e)){setMsg('Enter a valid email.',true);return;}
