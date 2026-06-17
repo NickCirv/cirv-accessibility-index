@@ -11,6 +11,7 @@ const { parseRobots, matchRule } = require('./src/robots');
 const { openStore, recordScan, latestScans, countScans } = require('./src/store');
 const { crawl, scanOne, normalizeDomain } = require('./src/crawl');
 const { fetchHtml } = require('./src/fetch');
+const { ScanError } = require('./engine/fetch');
 
 // Queue-based fake HTTP client: each .get() returns the next response (or throws
 // if it's an Error). Last entry repeats. Lets us test fetch logic with no network.
@@ -172,6 +173,40 @@ async function run() {
     const row = await scanOne('shop.com', { deps, now: 1 });
     assert.strictEqual(row.status, 'error');
     assert.strictEqual(row.error_code, 'fetch');
+  });
+
+  // ---- Firecrawl fallback (bot-management blocks) ----
+  const blocked = { ...fakeOk, fetchHtml: async () => { throw new ScanError('Access blocked.', 'blocked_403'); } };
+  await t('scanOne recovers a blocked_403 via Firecrawl fallback', async () => {
+    const deps = { ...blocked, fetchViaFirecrawl: async () => ({ html: '<x>', finalUrl: 'https://shop.com/' }) };
+    const row = await scanOne('shop.com', { deps, now: 1 });
+    assert.strictEqual(row.status, 'ok');
+    assert.strictEqual(row.via, 'firecrawl');
+    assert.strictEqual(row.score, 72);
+  });
+  await t('scanOne keeps the original error when Firecrawl also fails', async () => {
+    const deps = { ...blocked, fetchViaFirecrawl: async () => { throw new ScanError('fc down', 'firecrawl_network'); } };
+    const row = await scanOne('shop.com', { deps, now: 1 });
+    assert.strictEqual(row.status, 'error');
+    assert.strictEqual(row.error_code, 'blocked_403'); // true reason, not the fallback's
+  });
+  await t('scanOne does NOT use Firecrawl for non-recoverable codes (http_404)', async () => {
+    let called = false;
+    const deps = {
+      ...fakeOk,
+      fetchHtml: async () => { throw new ScanError('gone', 'http_404'); },
+      fetchViaFirecrawl: async () => { called = true; return { html: '<x>', finalUrl: 'x' }; },
+    };
+    const row = await scanOne('shop.com', { deps, now: 1 });
+    assert.strictEqual(row.status, 'error');
+    assert.strictEqual(row.error_code, 'http_404');
+    assert.strictEqual(called, false);
+  });
+  await t('scanOne skips Firecrawl when firecrawl:false even if a fetcher exists', async () => {
+    const deps = { ...blocked, fetchViaFirecrawl: async () => ({ html: '<x>', finalUrl: 'x' }) };
+    const row = await scanOne('shop.com', { deps, now: 1, firecrawl: false });
+    assert.strictEqual(row.status, 'error');
+    assert.strictEqual(row.error_code, 'blocked_403');
   });
 
   // ---- crawl end-to-end with fakes ----
