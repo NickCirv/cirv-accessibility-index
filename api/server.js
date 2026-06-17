@@ -66,7 +66,8 @@ function handleEvent(db, event, env, now) {
 function createApp(opts) {
   const { db, stripe = null, env = process.env } = opts;
   const now = opts.now || (() => Date.now());
-  ensureKeysTable(db);
+  const keysDb = opts.keysDb || db; // keys persist separately from the (rebuildable) dataset
+  ensureKeysTable(keysDb);
   const app = express();
   app.disable('x-powered-by');
 
@@ -80,7 +81,7 @@ function createApp(opts) {
       return res.status(400).json({ error: 'invalid signature' });
     }
     try {
-      handleEvent(db, event, env, now());
+      handleEvent(keysDb, event, env, now());
     } catch (e) {
       console.error('webhook handler error:', e && e.message);
     }
@@ -114,10 +115,10 @@ function createApp(opts) {
   app.post('/v1/signup', (req, res) => {
     const email = String((req.body && req.body.email) || '').trim().toLowerCase();
     if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'valid email required' });
-    if (findByEmail(db, email)) {
+    if (findByEmail(keysDb, email)) {
       return res.status(200).json({ api_key: null, message: 'A key already exists for this email.' });
     }
-    const raw = issueKey(db, { email, tier: 'free' }, now());
+    const raw = issueKey(keysDb, { email, tier: 'free' }, now());
     return res.status(201).json({ api_key: raw, tier: 'free', note: 'Store this key now — it is shown only once.' });
   });
 
@@ -125,7 +126,7 @@ function createApp(opts) {
   function auth(req, res, next) {
     const m = String(req.headers.authorization || '').match(/^Bearer\s+(.+)$/i);
     if (!m) return res.status(401).json({ error: 'missing API key' });
-    const rec = findByHash(db, hashKey(m[1].trim()));
+    const rec = findByHash(keysDb, hashKey(m[1].trim()));
     if (!rec) return res.status(401).json({ error: 'invalid API key' });
     const def = TIERS[rec.tier] || TIERS.free;
     const rl = checkLimit(rec.key_hash, def.rateLimit, now());
@@ -198,9 +199,10 @@ if (require.main === module) {
   const { getStripe } = require('./stripe');
   const dbPath = process.env.DATA_DB || path.join(__dirname, '..', 'data', 'index.db');
   const db = openStore(dbPath);
+  const keysDb = process.env.KEYS_DB ? openStore(process.env.KEYS_DB) : db;
   const stripe = process.env.STRIPE_SECRET_KEY ? getStripe(process.env.STRIPE_SECRET_KEY) : null;
   if (!stripe) console.warn('STRIPE_SECRET_KEY not set — billing endpoints return 503.');
-  const app = createApp({ db, stripe, env: process.env });
+  const app = createApp({ db, keysDb, stripe, env: process.env });
   const port = process.env.PORT || 4000;
   app.listen(port, () => console.log(`Cirv Index API on :${port}`));
 }
