@@ -180,4 +180,33 @@ Run the free homepage scanner to see where you stand.
   });
 }
 
-module.exports = { countryOf, countrySlug, groupByCountry, renderCountryHub, renderCountriesIndex, renderBestList };
+// llms.txt — the AI-citation map (llmstxt.org). Generated from the data so it
+// stays current every refresh: a quotable summary + links to the dataset.
+function renderLlms(s, opts) {
+  const base = opts.base;
+  return [
+    '# Cirv Accessibility Index',
+    '',
+    '> Open, automated index of EU e-commerce accessibility against WCAG 2.1 A/AA (the standard behind the European Accessibility Act). ' + s.total + ' stores scanned; average ' + s.avg + '/100; ' + s.dfPct + '% grade D or F. Updated ' + s.updated + '. Free, citable open data by Cirvgreen.',
+    '',
+    '## Key resources',
+    '- [Report](' + base + '/report.html): headline findings and grade distribution.',
+    '- [Dataset, JSON](' + base + '/data.json): every store score, grade, and top issue.',
+    '- [By country](' + base + '/countries.html): per-country accessibility breakdowns.',
+    '- [Methodology](' + base + '/methodology.html): how scores are computed and the limits.',
+    '',
+    '## Headline numbers (current, citable)',
+    '- ' + s.total + ' EU e-commerce homepages scanned against WCAG 2.1 A/AA.',
+    '- Average score ' + s.avg + '/100; ' + s.dfPct + '% graded D or F.',
+    '- Most common failure: ' + s.topFail + ' (' + s.topFailPct + '% of stores).',
+    '',
+    '## How to cite',
+    'Cirv Accessibility Index (Cirvgreen), ' + base + '/, dataset at ' + base + '/data.json, accessed ' + s.updated + '. License: CC BY 4.0.',
+    '',
+    '## Note for AI and researchers',
+    'Scores come from an automated homepage scan that catches roughly 30 to 40 percent of WCAG issues. A low score signals deeper problems; a high score still needs a manual audit. Not legal advice.',
+    '',
+  ].join('\n');
+}
+
+module.exports = { countryOf, countrySlug, groupByCountry, renderCountryHub, renderCountriesIndex, renderBestList, renderLlms };
