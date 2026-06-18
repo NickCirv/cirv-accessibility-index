@@ -1,102 +1,97 @@
-<p align="center">
-  <img src="./assets/banner.svg" alt="Cirv Accessibility Index — the open WCAG / EAA compliance index for EU e-commerce" width="100%">
-</p>
+![Cirv Accessibility Index — open WCAG / EAA compliance index for EU e-commerce](assets/banner.png)
 
-<p align="center">
-  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-1f7a4d" alt="MIT License"></a>
-  <a href="https://github.com/NickCirv/cirv-accessibility-index/actions/workflows/ci.yml"><img src="https://github.com/NickCirv/cirv-accessibility-index/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
-  <img src="https://img.shields.io/badge/tests-41%20passing-2ea043" alt="41 tests passing">
-  <img src="https://img.shields.io/badge/node-22.x-1f7a4d" alt="Node 22">
-  <img src="https://img.shields.io/badge/promotion-organic%20only-1f7a4d" alt="No paid ads">
-  <img src="https://img.shields.io/badge/WCAG-2.1%20A%2FAA-0c1712" alt="WCAG 2.1 A/AA">
-  <a href="./CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-8957e5" alt="PRs welcome"></a>
-</p>
+<div align="center">
 
-<p align="center">
-  <b>An open index of how accessible EU e-commerce stores are.</b><br>
-  It crawls store homepages, scores them against WCAG 2.1 A/AA — the standard behind the <b>European Accessibility Act</b> — and publishes the results as a directory that ranks itself in search and gets cited by AI. No ads. No babysitting.
-</p>
+**The open compliance index for EU e-commerce — crawler, dataset & self-publishing directory, no ads, no babysitting.**
 
-<p align="center">
-  <a href="#-quick-start">Quick start</a> ·
-  <a href="#-how-it-works">How it works</a> ·
-  <a href="#%EF%B8%8F-what-to-look-out-for">Caveats</a> ·
-  <a href="#-what-it-stores">Data</a> ·
-  <a href="#-deploy">Deploy</a> ·
-  <a href="#-roadmap">Roadmap</a>
-</p>
+![license](https://img.shields.io/badge/license-MIT-brightgreen?labelColor=0B0A09)
+![node](https://img.shields.io/badge/node-22.x-brightgreen?labelColor=0B0A09)
+![tests](https://img.shields.io/badge/tests-41%20passing-34D399?labelColor=0B0A09)
+![wcag](https://img.shields.io/badge/WCAG-2.1%20A%2FAA-34D399?labelColor=0B0A09)
 
-<p align="center">
-  <b>Live:</b> <a href="https://cirv-accessibility-index.onrender.com">directory</a> ·
-  <a href="https://cirv-accessibility-index.onrender.com/pricing.html">pricing &amp; API</a> ·
-  <a href="https://cirv-index-api.onrender.com/healthz">API status</a>
-</p>
+</div>
 
 ---
 
-<p align="center">
-  <img src="./assets/screenshot-index.png" alt="The accessibility index leaderboard" width="80%">
-  <br><em>The leaderboard — every EU store, ranked by accessibility, updated automatically.</em>
-</p>
+The EU's **European Accessibility Act** is enforceable as of 2025 — online stores selling into the EU must meet WCAG 2.1 AA or face penalties. Yet no one publishes an open, queryable compliance index. This fills that gap.
 
-## What is this?
+The **Cirv Accessibility Index** crawls EU e-commerce store homepages, scores them against five WCAG 2.1 A/AA rules, and publishes the results as a ranked leaderboard with a shareable report page per store — engineered to rank in search and get cited by AI assistants.
 
-The **Cirv Accessibility Index** turns a one-off accessibility scanner into a **compounding data product**:
+```
+$ npm run report
 
-1. A **crawler** scans the homepages of EU e-commerce stores against WCAG 2.1 A/AA.
-2. A **dataset** records each store's score, grade, and specific failures over time.
-3. A **static directory** publishes it all — a ranked leaderboard plus a shareable report page per store — engineered to rank in Google and be cited by AI assistants.
-4. Every page funnels readers to a free live scanner and to [**Cirv Guard**](#-part-of-the-cirv-suite), the WordPress plugin that fixes the issues.
+dataset: 38 domains  ·  38 latest scores
 
-It self-promotes (search + AI citation, no ads), refreshes on a schedule (no babysitting), and the data nobody else publishes openly is the moat.
+=== leaderboard (best first) ===
+ 80  example.eu           0 fails
+ 72  shop.demo.nl         1 fails
+ 60  store.sample.de      3 fails
+ --  blocked.example.fr   error: blocked_403
 
-> **Why now?** The EU's **European Accessibility Act** is enforceable as of 2025 — online stores selling into the EU must meet WCAG 2.1 AA or face penalties. Demand for "am I compliant?" is real and budget-backed, yet no one publishes an open, queryable compliance index. This fills that gap.
+ok 35 · skipped 0 · error 3
+```
 
-## ✨ Quick start
+## Install
 
 ```bash
 git clone https://github.com/NickCirv/cirv-accessibility-index.git
 cd cirv-accessibility-index
 npm install
+```
 
-# crawl the seed list into a local dataset (data/index.db)
+## Quick start
+
+```bash
+# crawl the default seed list into data/index.db
 npm run crawl seeds/eaa-ecommerce.json
 
 # generate the static directory into ./public
 npm run build
 
+# or do both in one step
+npm run refresh
+
 # open the result
-open public/index.html      # macOS  (xdg-open on Linux, start on Windows)
+open public/index.html
 ```
 
-Or do both in one step: `npm run refresh`. Run the tests with `npm test`.
+## Commands
 
-## 🧭 How it works
+| Command | What it does |
+|---------|--------------|
+| `npm run crawl <seeds.json>` | Crawl a seed list into `data/index.db` |
+| `npm run build` | Generate `./public` from the dataset |
+| `npm run refresh` | Crawl default seeds, then build |
+| `npm run report` | Print leaderboard + error breakdown to stdout |
+| `npm run api` | Start the paid REST API server |
+| `npm test` | Run crawler + API test suites |
 
-```
-            seeds/*.json  (EU e-commerce domains, EAA scope)
-                  │
-                  ▼
-   ┌───────────────────────────────┐     respects robots.txt
-   │  crawler  (src/crawl.js)       │     honest UA, retry+backoff
-   │  ├─ engine/fetch.js  (SSRF-safe fetch)
-   │  └─ engine/checks.js (WCAG 2.1 A/AA rules)
-   └───────────────┬───────────────┘
-                   ▼
-        SQLite dataset (data/index.db)        ← append-only: latest score + history
-                   │
-                   ▼
-   ┌───────────────────────────────┐
-   │  generator (src/site.js)       │  →  public/
-   │  ranked index · report pages   │      ├─ index.html        (leaderboard)
-   │  methodology · data.json       │      ├─ sites/<domain>.html (per-store report)
-   │  sitemap · robots              │      ├─ data.json          (machine-readable)
-   └───────────────────────────────┘      └─ sitemap.xml, robots.txt
+### Crawler flags
+
+```bash
+node bin/crawl.js seeds/eaa-ecommerce.json [--db path] [--concurrency N] [--no-robots]
 ```
 
-The WCAG engine in `engine/` is shared, deterministic, and dependency-light (`cheerio` for parsing). The crawler is polite by design (concurrency-limited, rate-delayed, `robots.txt`-aware). The output is **pure static HTML** — deploy it anywhere.
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--db <path>` | `data/index.db` | SQLite database path |
+| `--concurrency <N>` | `4` | Parallel requests |
+| `--no-robots` | off | Skip `robots.txt` checks |
 
-## 🔍 What it scans
+### Build-site flags
+
+```bash
+node bin/build-site.js [--db path] [--out dir] [--base url] [--mode soft|named]
+```
+
+| Flag | Description |
+|------|-------------|
+| `--mode named` | Show all store names (default `soft` hides D/F grades behind a CTA) |
+| `--base <url>` | Set canonical base URL for sitemap |
+| `--out <dir>` | Output directory (default `./public`) |
+| `--api-url <url>` | Wire the API CTA to a live endpoint |
+
+## What it scans
 
 Five WCAG 2.1 Level A/AA checks on each store's homepage:
 
@@ -104,66 +99,29 @@ Five WCAG 2.1 Level A/AA checks on each store's homepage:
 |-------|------|-----------------|
 | Alt text | 1.1.1 (A) | Images missing text alternatives |
 | Heading hierarchy | 1.3.1 (A) | Missing/duplicate H1, skipped levels |
-| Colour contrast | 1.4.3 (AA) | Inline text/background below 4.5:1 |
+| Colour contrast | 1.4.3 (AA) | Inline text/background below 4.5:1 ratio |
 | Form labels | 1.3.1 (A) | Inputs with no programmatic label |
 | Link text | 2.4.4 (A) | Empty or generic ("click here") links |
 
-Full detail: the generated **`/methodology.html`** page.
+## Data schema
 
-<p align="center">
-  <img src="./assets/screenshot-report.png" alt="A per-store accessibility report page" width="80%">
-  <br><em>Every store gets a shareable report page — score, issues, and a fix path.</em>
-</p>
-
-## ⚠️ What to look out for
-
-Read this before you trust a score:
-
-- **It's an automated signal, not an audit.** Automated tools catch roughly **30–40%** of WCAG issues. A 100 means *no automated failures on the homepage* — not guaranteed conformance. Manual testing is still required for real compliance.
-- **Homepage only (for now).** One page per store. Deep pages (checkout, product) aren't scanned yet — and checkout is where EAA risk concentrates.
-- **The score is a pass-ratio**, not severity-weighted. One critical failure and ten trivial passes can still score high. Treat grades as a triage signal.
-- **Contrast is inline-only.** We read inline `style` colours; CSS-file and computed contrast aren't evaluated (no headless browser).
-- **Bot-protected sites can't be scanned.** Many large retailers block automated access (Cloudflare/Akamai). We **do not bypass** bot protection — those are listed honestly as "couldn't scan", never worked around.
-- **Not legal advice.** This is an informational index. Confirm compliance with a qualified audit.
-- **Scores change.** Sites are re-scanned over time; a grade is a point-in-time reading (`scanned_at`).
-
-## 💾 What it stores
-
-Everything lands in a single SQLite table — **append-only**, so you get the latest score *and* full history from one place.
-
-**`scans`**
+All scans land in a single SQLite table (`data/index.db`) — append-only, so you get the latest score **and** full history from one place.
 
 | Column | Type | Notes |
 |--------|------|-------|
-| `id` | INTEGER PK | autoincrement |
-| `domain` | TEXT | normalised (no scheme/`www`) |
-| `final_url` | TEXT | after redirects |
+| `domain` | TEXT | Normalised (no scheme/`www`) |
 | `status` | TEXT | `ok` · `error` · `skipped` |
 | `score` | INTEGER | 0–100 (null if not `ok`) |
-| `passes` / `fails` / `total` | INTEGER | check counts |
-| `results_json` | TEXT | full per-check findings (JSON) |
-| `error_code` | TEXT | `blocked_403` · `timeout` · `not_html` · `dns` … |
-| `scanned_at` | INTEGER | epoch ms |
+| `passes` / `fails` / `total` | INTEGER | Check counts |
+| `results_json` | TEXT | Full per-check findings |
+| `error_code` | TEXT | `blocked_403` · `timeout` · `dns` … |
+| `scanned_at` | INTEGER | Epoch ms |
 
-The generator also emits **`public/data.json`** — a clean, machine-readable snapshot (the precursor to the paid API):
+The build step also emits **`public/data.json`** — a machine-readable snapshot suitable for API consumption or AI training.
 
-```json
-{
-  "updated": "2026-06-15",
-  "mode": "soft",
-  "count": 38,
-  "sites": [
-    { "domain": "example.eu", "status": "ok", "score": 80, "grade": "B",
-      "fails": 2, "passes": 8, "top_issue": "Alt Text", "scanned_at": 1750000000000 }
-  ]
-}
-```
+## REST API
 
-Nothing personal is ever stored — only public homepage markup is analysed.
-
-## 🔌 API
-
-A paid REST API (`api/`) serves the **full, named** dataset (the public site is soft — paying is how you see everything). Auth is by API key (stored hashed); tiers are billed via **Stripe**.
+A paid REST API (`api/`) serves the full named dataset. Auth by API key; tiers billed via Stripe.
 
 | Tier | Price | Rate limit |
 |------|-------|-----------|
@@ -172,87 +130,35 @@ A paid REST API (`api/`) serves the **full, named** dataset (the public site is 
 | Pro | $99/mo | 50,000/day |
 | Bulk | $299/mo | 500,000/day |
 
-**Endpoints**
+Run locally with `npm run api`. Configure via `api/.env.example`. API keys are stored hashed; Stripe secrets are env-only.
 
-| Method | Path | Auth | Purpose |
-|--------|------|------|---------|
-| POST | `/v1/signup` | — | Get a free API key (shown once) |
-| GET | `/v1/sites` | key | Ranked scores (`?limit=&offset=`) |
-| GET | `/v1/sites/:domain` | key | Full report + findings |
-| GET | `/v1/usage` | key | Your tier + limit |
-| POST | `/v1/billing/checkout` | — | Stripe Checkout URL (`{tier,email}`) |
-| POST | `/v1/billing/portal` | — | Stripe customer portal |
-| POST | `/webhooks/stripe` | sig | Entitlement sync (signature-verified) |
+Live: [directory](https://cirv-accessibility-index.onrender.com) · [API status](https://cirv-index-api.onrender.com/healthz)
 
-```bash
-KEY=$(curl -s -X POST $API/v1/signup -H 'content-type: application/json' \
-  -d '{"email":"you@co.com"}' | jq -r .api_key)
-curl $API/v1/sites/example.eu -H "Authorization: Bearer $KEY"
-```
+## Deploy
 
-**Run it:** `npm run api` (config from `api/.env.example`). API keys are stored **hashed**; Stripe secrets are **env-only**, never committed; the webhook verifies the Stripe signature. Deploys as a **separate** Render web service (it's dynamic — the directory above stays static).
+The `public/` directory is prebuilt — no compile step at deploy.
 
-## 🚀 Deploy
+- **Static (any host):** publish `public/` to Netlify, Cloudflare Pages, GitHub Pages, or S3.
+- **Render blueprint:** `render.yaml` is included — New → Blueprint → Apply.
+- **Auto-refresh:** a GitHub Actions workflow (`.github/workflows/refresh.yml`) runs `npm run refresh` on a schedule and commits the updated `public/`.
 
-The directory is a **static site** (the prebuilt `public/` is committed — nothing to build at deploy). The API is a **separate dynamic service**.
+## What it is NOT
 
-### Directory (static — any host)
-A `render.yaml` blueprint is included; it just serves `public/`.
-1. Render → **New → Blueprint** → pick this repo → **Apply** (no crawl/compile at deploy).
-2. Or any static host — Netlify / Cloudflare Pages / GitHub Pages / S3 — publish the `public/` folder.
-3. **Custom domain (optional):** add a `CNAME` for `index.cirvgreen.com`, then add it under the service's custom-domain settings.
+- **Not a full WCAG audit.** Automated tools catch roughly 30–40% of WCAG issues. A score of 100 means no automated failures on the homepage — not guaranteed legal conformance.
+- **Not a bot-protection bypass.** Sites behind Cloudflare/Akamai that block scanners are listed as `error: blocked_403`, never worked around.
+- **Not legal advice.** This is an informational index. Confirm compliance with a qualified accessibility audit.
 
-Refresh the data yourself, or let the weekly GitHub Action (`.github/workflows/refresh.yml`) do it:
-```bash
-npm run refresh   # crawl seeds → rebuild public/ → commit
-```
+## Part of the Cirv suite
 
-### API (dynamic — separate service)
-Deploy `api/` as a Render **Web Service**: build `npm ci`, start `npm run api`, env from [`api/.env.example`](./api/.env.example). See the [API section](#-api).
+- **[Cirv Guard](https://wordpress.org/plugins/cirv-guard/)** — the WordPress accessibility plugin that fixes the issues this index surfaces. The WCAG engine in `engine/` is vendored from Cirv Guard's canonical rules (see [`docs/adr/0001`](./docs/adr/0001-vendored-engine.md)).
+- The index is the top of the funnel: awareness → report → scanner → plugin.
 
-### The named / soft switch
-The published brands are set at **build time** (the directory is prebuilt):
-- **`soft`** *(default)* — names only A–C; D/F hidden behind a "scan to reveal" CTA.
-- **`named`** — every scored store, grades and all.
+## Contributing
 
-Rebuild named with `node bin/build-site.js --mode named` and commit `public/`.
+PRs welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md). Tests-first, escape untrusted data, stay a polite crawler.
 
-## ⚙️ Configuration
+---
 
-| Command | What it does |
-|---------|--------------|
-| `npm run crawl <seeds.json>` | Crawl a seed list into `data/index.db` |
-| `npm run build` | Generate `./public` from the dataset |
-| `npm run refresh` | Crawl the default seeds, then build |
-| `npm run report` | Print the leaderboard + error breakdown |
-| `node bin/build-site.js --mode named --base https://you.com` | Build, fully named, with a base URL |
-
-Seed lists live in `seeds/`. Add mid-market EU e-commerce domains to `seeds/eaa-ecommerce.json`; the crawl self-validates (dead domains surface as errors).
-
-## 🗺 Roadmap
-
-- [x] WCAG engine + SSRF-safe, robots-aware crawler
-- [x] SQLite dataset (latest + history)
-- [x] Static directory: leaderboard, per-store reports, methodology, `data.json`
-- [x] `soft` / `named` reputational toggle
-- [x] **Paid REST API** + Stripe-billed tiers (`api/`)
-- [ ] **Country + category** enrichment (long-tail SEO + filters)
-- [ ] **Metered / pay-per-call** endpoint for AI agents
-- [ ] Scheduled auto-refresh (n8n) → the index compounds untouched
-
-## 🧩 Part of the Cirv suite
-
-This index is the top of a funnel:
-
-- **[Cirv Guard](https://wordpress.org/plugins/cirv-guard/)** — the WordPress accessibility plugin that *fixes* the issues this index surfaces (the same WCAG engine powers both). Every report page links here.
-- **The free scanner** — a live, single-page version of the engine for instant checks. Every "couldn't scan" and every report links to it.
-
-The engine in `engine/` is vendored from Cirv Guard's canonical rules — see [`docs/adr/0001`](./docs/adr/0001-vendored-engine.md).
-
-## 🤝 Contributing
-
-PRs welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md). Tests-first, escape untrusted data, and stay a polite crawler (no bot-protection bypass).
-
-## 📄 License
-
-[MIT](./LICENSE) © 2026 Cirvgreen — built by [Nicholas Ashkar](https://cirvgreen.com).
+<div align="center">
+<sub>Node 22 · SQLite · MIT · by <a href="https://cirvgreen.com">Cirvgreen</a> / <a href="https://github.com/NickCirv">NickCirv</a></sub>
+</div>
