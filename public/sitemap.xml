@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://index.cirvgreen.com/</loc></url>
+<url><loc>https://index.cirvgreen.com/countries.html</loc></url>
+<url><loc>https://index.cirvgreen.com/best.html</loc></url>
 <url><loc>https://index.cirvgreen.com/report.html</loc></url>
 <url><loc>https://index.cirvgreen.com/pricing.html</loc></url>
 <url><loc>https://index.cirvgreen.com/methodology.html</loc></url>
+<url><loc>https://index.cirvgreen.com/country/international.html</loc></url>
+<url><loc>https://index.cirvgreen.com/country/germany.html</loc></url>
+<url><loc>https://index.cirvgreen.com/country/netherlands.html</loc></url>
+<url><loc>https://index.cirvgreen.com/country/france.html</loc></url>
+<url><loc>https://index.cirvgreen.com/country/poland.html</loc></url>
 <url><loc>https://index.cirvgreen.com/sites/asambeauty.com.html</loc></url>
 <url><loc>https://index.cirvgreen.com/sites/ellos.se.html</loc></url>
 <url><loc>https://index.cirvgreen.com/sites/fahrrad.de.html</loc></url>

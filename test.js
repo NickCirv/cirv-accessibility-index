@@ -209,6 +209,48 @@ async function run() {
     assert.strictEqual(row.error_code, 'blocked_403');
   });
 
+  // ---- programmatic SEO pages ----
+  const seo = require('./src/seo-pages');
+  const fakeH = {
+    layout: (o) => `T:${o.title}\nC:${o.canonical}\n${o.body}`,
+    esc: (x) => String(x == null ? '' : x),
+    grade: (s) => (s >= 90 ? 'A' : s >= 75 ? 'B' : s >= 40 ? 'C' : 'F'),
+    gradeClass: () => 'g-x',
+    safeFile: (d) => String(d).replace(/[^a-z0-9.-]/gi, '_'),
+    fmtDate: () => '2026-01-01',
+    SCANNER_URL: 'http://scan',
+  };
+  await t('countryOf maps TLDs (and .co.uk, fallback)', () => {
+    assert.strictEqual(seo.countryOf('notino.de'), 'Germany');
+    assert.strictEqual(seo.countryOf('sarenza.fr'), 'France');
+    assert.strictEqual(seo.countryOf('shop.co.uk'), 'United Kingdom');
+    assert.strictEqual(seo.countryOf('zalando.com'), 'International');
+  });
+  await t('groupByCountry drops <2-store countries and sorts by count', () => {
+    const rows = [
+      { domain: 'a.de', score: 90 }, { domain: 'b.de', score: 50 }, { domain: 'c.de', score: 30 },
+      { domain: 'd.fr', score: 80 }, { domain: 'e.fr', score: 70 },
+      { domain: 'solo.it', score: 60 },
+    ];
+    const g = seo.groupByCountry(rows);
+    assert.deepStrictEqual(g.map((x) => x.country), ['Germany', 'France']); // Italy dropped (1 store)
+    assert.strictEqual(g[0].rows[0].score, 90); // sorted desc within country
+  });
+  await t('renderCountryHub names A/B/C, hides D/F in soft mode', () => {
+    const group = { country: 'Germany', slug: 'germany', rows: [{ domain: 'good.de', score: 92 }, { domain: 'bad.de', score: 20 }], avg: 56, total: 2 };
+    const soft = seo.renderCountryHub(group, { base: 'https://x', mode: 'soft', h: fakeH });
+    assert.ok(soft.includes('/sites/good.de.html')); // A named
+    assert.ok(!soft.includes('/sites/bad.de.html')); // F hidden
+    const named = seo.renderCountryHub(group, { base: 'https://x', mode: 'named', h: fakeH });
+    assert.ok(named.includes('/sites/bad.de.html')); // named mode reveals
+  });
+  await t('renderBestList includes only A/B and links them', () => {
+    const rows = [{ domain: 'top.de', score: 95 }, { domain: 'mid.fr', score: 50 }];
+    const out = seo.renderBestList(rows, { base: 'https://x', mode: 'soft', h: fakeH });
+    assert.ok(out.includes('/sites/top.de.html'));
+    assert.ok(!out.includes('mid.fr'));
+  });
+
   // ---- crawl end-to-end with fakes ----
   await t('crawl scans, dedups, and stores every domain', async () => {
     const db = openStore(':memory:');
