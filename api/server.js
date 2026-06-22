@@ -90,7 +90,7 @@ function createApp(opts) {
 
   // CORS — the pricing page (static directory, different origin) calls this API
   // from the browser. Allow-list origins via CORS_ORIGINS (comma-separated), or '*'.
-  const allowed = String(env.CORS_ORIGINS || 'https://cirv-accessibility-index.onrender.com')
+  const allowed = String(env.CORS_ORIGINS || 'https://index.cirvgreen.com,https://cirv-accessibility-index.onrender.com')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
