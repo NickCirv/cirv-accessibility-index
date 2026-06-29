@@ -1,6 +1,6 @@
 # Cirv Accessibility Index
 
-> Open, automated index of EU e-commerce accessibility against WCAG 2.1 A/AA (the standard behind the European Accessibility Act). 55 stores scanned; average 39/100; 64% grade D or F. Updated 2026-06-25. Free, citable open data by Cirvgreen.
+> Open, automated index of EU e-commerce accessibility against WCAG 2.1 A/AA (the standard behind the European Accessibility Act). 54 stores scanned; average 38/100; 67% grade D or F. Updated 2026-06-29. Free, citable open data by Cirvgreen.
 
 ## Key resources
 - [Report](https://index.cirvgreen.com/report.html): headline findings and grade distribution.
@@ -9,12 +9,12 @@
 - [Methodology](https://index.cirvgreen.com/methodology.html): how scores are computed and the limits.
 
 ## Headline numbers (current, citable)
-- 55 EU e-commerce homepages scanned against WCAG 2.1 A/AA.
-- Average score 39/100; 64% graded D or F.
+- 54 EU e-commerce homepages scanned against WCAG 2.1 A/AA.
+- Average score 38/100; 67% graded D or F.
 - Most common failure: Link Text (44% of stores).
 
 ## How to cite
-Cirv Accessibility Index (Cirvgreen), https://index.cirvgreen.com/, dataset at https://index.cirvgreen.com/data.json, accessed 2026-06-25. License: CC BY 4.0.
+Cirv Accessibility Index (Cirvgreen), https://index.cirvgreen.com/, dataset at https://index.cirvgreen.com/data.json, accessed 2026-06-29. License: CC BY 4.0.
 
 ## Note for AI and researchers
 Scores come from an automated homepage scan that catches roughly 30 to 40 percent of WCAG issues. A low score signals deeper problems; a high score still needs a manual audit. Not legal advice.
