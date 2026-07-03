@@ -17,3 +17,31 @@ services:
       - path: /*
         name: Referrer-Policy
         value: strict-origin-when-cross-origin
+
+  # API service — powers the pricing page's "Get a free key" + the public data
+  # endpoints. Crawls a fresh dataset at build, then serves it.
+  # Stripe checkout requires STRIPE_SECRET_KEY + tier price IDs in Render env.
+  # API keys must live on the persistent disk via KEYS_DB or they reset on deploy.
+  - type: web
+    name: cirv-index-api
+    runtime: node
+    plan: starter
+    buildCommand: "npm ci && npm run crawl seeds/eaa-ecommerce.json"
+    startCommand: "npm run api"
+    healthCheckPath: /healthz
+    pullRequestPreviewsEnabled: false
+    disk:
+      name: cirv-index-api-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATA_DB
+        value: ./data/index.db
+      - key: KEYS_DB
+        value: /var/data/keys.db
+      - key: CORS_ORIGINS
+        value: "https://index.cirvgreen.com,https://cirv-accessibility-index.onrender.com"
+      - key: PORT
+        value: "4000"
+      - key: API_BASE_URL
+        value: "https://index.cirvgreen.com"
