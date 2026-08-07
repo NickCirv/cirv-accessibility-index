@@ -354,6 +354,11 @@ async function run() {
     assert(html.includes('"https://api.test"'), 'embeds the API base');
     assert(html.includes('Get a free key'), 'has the free-key form');
     assert(html.includes('/v1/billing/checkout'), 'calls checkout');
+    assert(!html.includes("fetch(API+'/healthz')"), 'does not warm the API from the browser');
+    assert(!html.includes('quiet period'), 'does not show obsolete cold-start copy');
+    assert(html.includes('new AbortController()'), 'keeps a bounded request timeout');
+    assert.strictEqual((html.match(/apiPost\('\/v1\/signup'/g) || []).length, 1, 'signup is not retried');
+    assert.strictEqual((html.match(/apiPost\('\/v1\/billing\/checkout'/g) || []).length, 1, 'checkout is not retried');
   });
 
   t('renderReport aggregates the dataset (grades, failures, best/worst, PDF link)', () => {
