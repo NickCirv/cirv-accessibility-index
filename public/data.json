@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-31",
+  "updated": "2026-09-07",
   "mode": "named",
-  "count": 43,
+  "count": 45,
   "license": "CC-BY-4.0",
-  "cite": "Cirv Accessibility Index (Cirvgreen), https://index.cirvgreen.com, accessed 2026-08-31",
+  "cite": "Cirv Accessibility Index (Cirvgreen), https://index.cirvgreen.com, accessed 2026-09-07",
   "source": "https://index.cirvgreen.com",
   "sites": [
     {
@@ -15,7 +15,7 @@
       "passes": 5,
       "top_issue": null,
       "error_code": null,
-      "scanned_at": 1788180970084
+      "scanned_at": 1788781642675
     },
     {
       "domain": "bangerhead.com",
@@ -26,7 +26,18 @@
       "passes": 5,
       "top_issue": null,
       "error_code": null,
-      "scanned_at": 1788181006202
+      "scanned_at": 1788781657035
+    },
+    {
+      "domain": "ellos.se",
+      "status": "ok",
+      "score": 100,
+      "grade": "A",
+      "fails": 0,
+      "passes": 5,
+      "top_issue": null,
+      "error_code": null,
+      "scanned_at": 1788781656608
     },
     {
       "domain": "privalia.com",
@@ -37,7 +48,7 @@
       "passes": 5,
       "top_issue": null,
       "error_code": null,
-      "scanned_at": 1788181002354
+      "scanned_at": 1788781653007
     },
     {
       "domain": "spartoo.com",
@@ -48,7 +59,18 @@
       "passes": 5,
       "top_issue": null,
       "error_code": null,
-      "scanned_at": 1788180982870
+      "scanned_at": 1788781644917
+    },
+    {
+      "domain": "aboutyou.de",
+      "status": "ok",
+      "score": 80,
+      "grade": "B",
+      "fails": 1,
+      "passes": 4,
+      "top_issue": "Heading Hierarchy",
+      "error_code": null,
+      "scanned_at": 1788781658753
     },
     {
       "domain": "gymshark.com",
@@ -59,7 +81,7 @@
       "passes": 4,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181007188
+      "scanned_at": 1788781657554
     },
     {
       "domain": "lookfantastic.com",
@@ -70,18 +92,7 @@
       "passes": 4,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181006211
-    },
-    {
-      "domain": "nocibe.fr",
-      "status": "ok",
-      "score": 80,
-      "grade": "B",
-      "fails": 1,
-      "passes": 4,
-      "top_issue": "Heading Hierarchy",
-      "error_code": null,
-      "scanned_at": 1788180982980
+      "scanned_at": 1788781657415
     },
     {
       "domain": "royaldesign.com",
@@ -92,7 +103,7 @@
       "passes": 4,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181005798
+      "scanned_at": 1788781656859
     },
     {
       "domain": "simonlevelt.nl",
@@ -103,18 +114,7 @@
       "passes": 4,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788180999182
-    },
-    {
-      "domain": "yoox.com",
-      "status": "ok",
-      "score": 80,
-      "grade": "B",
-      "fails": 1,
-      "passes": 4,
-      "top_issue": "Link Text",
-      "error_code": null,
-      "scanned_at": 1788180999433
+      "scanned_at": 1788781650318
     },
     {
       "domain": "breuninger.com",
@@ -125,7 +125,7 @@
       "passes": 4,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180967369
+      "scanned_at": 1788781641147
     },
     {
       "domain": "home24.de",
@@ -136,29 +136,7 @@
       "passes": 4,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180965460
-    },
-    {
-      "domain": "aboutyou.de",
-      "status": "ok",
-      "score": 60,
-      "grade": "C",
-      "fails": 2,
-      "passes": 3,
-      "top_issue": "Heading Hierarchy",
-      "error_code": null,
-      "scanned_at": 1788181008662
-    },
-    {
-      "domain": "fahrrad.de",
-      "status": "ok",
-      "score": 60,
-      "grade": "C",
-      "fails": 2,
-      "passes": 3,
-      "top_issue": "Alt Text",
-      "error_code": null,
-      "scanned_at": 1788180966203
+      "scanned_at": 1788781641058
     },
     {
       "domain": "manufactum.de",
@@ -169,7 +147,7 @@
       "passes": 3,
       "top_issue": "Form Labels",
       "error_code": null,
-      "scanned_at": 1788180968384
+      "scanned_at": 1788781641307
     },
     {
       "domain": "na-kd.com",
@@ -180,7 +158,7 @@
       "passes": 3,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181004934
+      "scanned_at": 1788781656660
     },
     {
       "domain": "zalando.de",
@@ -191,7 +169,7 @@
       "passes": 3,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181008543
+      "scanned_at": 1788781658702
     },
     {
       "domain": "avocadostore.de",
@@ -202,7 +180,7 @@
       "passes": 3,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788180969023
+      "scanned_at": 1788781641376
     },
     {
       "domain": "boohoo.com",
@@ -213,29 +191,18 @@
       "passes": 3,
       "top_issue": "Form Labels",
       "error_code": null,
-      "scanned_at": 1788181007244
+      "scanned_at": 1788781658504
     },
     {
-      "domain": "ellos.se",
+      "domain": "fahrrad.de",
       "status": "ok",
       "score": 50,
       "grade": "D",
       "fails": 3,
       "passes": 3,
-      "top_issue": "Color Contrast",
-      "error_code": null,
-      "scanned_at": 1788181004792
-    },
-    {
-      "domain": "cultbeauty.co.uk",
-      "status": "ok",
-      "score": 43,
-      "grade": "D",
-      "fails": 4,
-      "passes": 3,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788181006938
+      "scanned_at": 1788781641058
     },
     {
       "domain": "hawkersco.com",
@@ -246,7 +213,7 @@
       "passes": 4,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788181001144
+      "scanned_at": 1788781652767
     },
     {
       "domain": "answear.com",
@@ -257,7 +224,40 @@
       "passes": 3,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181003890
+      "scanned_at": 1788781655011
+    },
+    {
+      "domain": "cultbeauty.co.uk",
+      "status": "ok",
+      "score": 38,
+      "grade": "F",
+      "fails": 5,
+      "passes": 3,
+      "top_issue": "Link Text",
+      "error_code": null,
+      "scanned_at": 1788781657510
+    },
+    {
+      "domain": "nocibe.fr",
+      "status": "ok",
+      "score": 38,
+      "grade": "F",
+      "fails": 5,
+      "passes": 3,
+      "top_issue": "Link Text",
+      "error_code": null,
+      "scanned_at": 1788781645724
+    },
+    {
+      "domain": "cdiscount.com",
+      "status": "ok",
+      "score": 33,
+      "grade": "F",
+      "fails": 6,
+      "passes": 3,
+      "top_issue": "Heading Hierarchy",
+      "error_code": null,
+      "scanned_at": 1788781648817
     },
     {
       "domain": "charlottetilbury.com",
@@ -268,7 +268,29 @@
       "passes": 3,
       "top_issue": "Heading Hierarchy",
       "error_code": null,
-      "scanned_at": 1788181007234
+      "scanned_at": 1788781657863
+    },
+    {
+      "domain": "yoox.com",
+      "status": "ok",
+      "score": 31,
+      "grade": "F",
+      "fails": 9,
+      "passes": 4,
+      "top_issue": "Link Text",
+      "error_code": null,
+      "scanned_at": 1788781651177
+    },
+    {
+      "domain": "baur.de",
+      "status": "ok",
+      "score": 30,
+      "grade": "F",
+      "fails": 7,
+      "passes": 3,
+      "top_issue": "Link Text",
+      "error_code": null,
+      "scanned_at": 1788781638751
     },
     {
       "domain": "sarenza.com",
@@ -279,18 +301,7 @@
       "passes": 3,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180982094
-    },
-    {
-      "domain": "baur.de",
-      "status": "ok",
-      "score": 27,
-      "grade": "F",
-      "fails": 8,
-      "passes": 3,
-      "top_issue": "Link Text",
-      "error_code": null,
-      "scanned_at": 1788180963610
+      "scanned_at": 1788781644244
     },
     {
       "domain": "modivo.pl",
@@ -301,7 +312,7 @@
       "passes": 3,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788181002931
+      "scanned_at": 1788781654670
     },
     {
       "domain": "maisonsdumonde.com",
@@ -312,7 +323,7 @@
       "passes": 2,
       "top_issue": "Alt Text",
       "error_code": null,
-      "scanned_at": 1788180983022
+      "scanned_at": 1788781646312
     },
     {
       "domain": "bonprix.de",
@@ -323,7 +334,7 @@
       "passes": 4,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180963610
+      "scanned_at": 1788781638751
     },
     {
       "domain": "laredoute.fr",
@@ -334,7 +345,7 @@
       "passes": 3,
       "top_issue": "Alt Text",
       "error_code": null,
-      "scanned_at": 1788180977867
+      "scanned_at": 1788781644120
     },
     {
       "domain": "smallable.com",
@@ -345,7 +356,7 @@
       "passes": 2,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180985233
+      "scanned_at": 1788781647173
     },
     {
       "domain": "fonq.nl",
@@ -356,7 +367,18 @@
       "passes": 2,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180998886
+      "scanned_at": 1788781650114
+    },
+    {
+      "domain": "notino.de",
+      "status": "ok",
+      "score": 17,
+      "grade": "F",
+      "fails": 10,
+      "passes": 2,
+      "top_issue": "Link Text",
+      "error_code": null,
+      "scanned_at": 1788781638746
     },
     {
       "domain": "sezane.com",
@@ -367,18 +389,7 @@
       "passes": 3,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180982888
-    },
-    {
-      "domain": "bergfreunde.de",
-      "status": "ok",
-      "score": 15,
-      "grade": "F",
-      "fails": 11,
-      "passes": 2,
-      "top_issue": "Link Text",
-      "error_code": null,
-      "scanned_at": 1788180972264
+      "scanned_at": 1788781645362
     },
     {
       "domain": "eobuwie.pl",
@@ -389,21 +400,43 @@
       "passes": 3,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788181003305
+      "scanned_at": 1788781654721
+    },
+    {
+      "domain": "bergfreunde.de",
+      "status": "ok",
+      "score": 13,
+      "grade": "F",
+      "fails": 14,
+      "passes": 2,
+      "top_issue": "Link Text",
+      "error_code": null,
+      "scanned_at": 1788781642782
+    },
+    {
+      "domain": "mytoys.de",
+      "status": "ok",
+      "score": 13,
+      "grade": "F",
+      "fails": 14,
+      "passes": 2,
+      "top_issue": "Alt Text",
+      "error_code": null,
+      "scanned_at": 1788781643216
+    },
+    {
+      "domain": "omoda.nl",
+      "status": "ok",
+      "score": 13,
+      "grade": "F",
+      "fails": 14,
+      "passes": 2,
+      "top_issue": "Alt Text",
+      "error_code": null,
+      "scanned_at": 1788781649908
     },
     {
       "domain": "tchibo.de",
-      "status": "ok",
-      "score": 15,
-      "grade": "F",
-      "fails": 17,
-      "passes": 3,
-      "top_issue": "Link Text",
-      "error_code": null,
-      "scanned_at": 1788180963610
-    },
-    {
-      "domain": "notino.de",
       "status": "ok",
       "score": 10,
       "grade": "F",
@@ -411,40 +444,29 @@
       "passes": 2,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788180963603
+      "scanned_at": 1788781638751
     },
     {
-      "domain": "omoda.nl",
+      "domain": "reuter.de",
       "status": "ok",
-      "score": 9,
+      "score": 8,
       "grade": "F",
-      "fails": 21,
+      "fails": 24,
       "passes": 2,
-      "top_issue": "Link Text",
+      "top_issue": "Alt Text",
       "error_code": null,
-      "scanned_at": 1788180994978
+      "scanned_at": 1788781640220
     },
     {
       "domain": "flaconi.de",
       "status": "ok",
-      "score": 8,
+      "score": 5,
       "grade": "F",
-      "fails": 23,
+      "fails": 40,
       "passes": 2,
-      "top_issue": "Link Text",
-      "error_code": null,
-      "scanned_at": 1788180963608
-    },
-    {
-      "domain": "mytoys.de",
-      "status": "ok",
-      "score": 6,
-      "grade": "F",
-      "fails": 15,
-      "passes": 1,
       "top_issue": "Alt Text",
       "error_code": null,
-      "scanned_at": 1788180973550
+      "scanned_at": 1788781638750
     },
     {
       "domain": "naturitas.es",
@@ -455,18 +477,18 @@
       "passes": 1,
       "top_issue": "Link Text",
       "error_code": null,
-      "scanned_at": 1788181000988
+      "scanned_at": 1788781652724
     },
     {
       "domain": "scalperscompany.com",
       "status": "ok",
       "score": 5,
       "grade": "F",
-      "fails": 18,
+      "fails": 20,
       "passes": 1,
       "top_issue": "Alt Text",
       "error_code": null,
-      "scanned_at": 1788181002181
+      "scanned_at": 1788781652898
     },
     {
       "domain": "juniqe.com",
@@ -477,7 +499,7 @@
       "passes": 1,
       "top_issue": "Alt Text",
       "error_code": null,
-      "scanned_at": 1788180975732
+      "scanned_at": 1788781644004
     },
     {
       "domain": "alltricks.fr",
@@ -488,7 +510,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788180990882
+      "scanned_at": 1788781647374
     },
     {
       "domain": "babyshop.com",
@@ -499,7 +521,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788181005400
+      "scanned_at": 1788781656747
     },
     {
       "domain": "bottegaverde.it",
@@ -510,18 +532,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "fetch",
-      "scanned_at": 1788181000929
-    },
-    {
-      "domain": "cdiscount.com",
-      "status": "error",
-      "score": null,
-      "grade": "—",
-      "fails": null,
-      "passes": null,
-      "top_issue": null,
-      "error_code": "blocked_403",
-      "scanned_at": 1788180993706
+      "scanned_at": 1788781652702
     },
     {
       "domain": "eataly.com",
@@ -532,7 +543,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788181000563
+      "scanned_at": 1788781652651
     },
     {
       "domain": "fnac.com",
@@ -543,7 +554,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788181009182
+      "scanned_at": 1788781658786
     },
     {
       "domain": "hema.nl",
@@ -554,7 +565,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788180996882
+      "scanned_at": 1788781649934
     },
     {
       "domain": "luisaviaroma.com",
@@ -565,7 +576,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788181000457
+      "scanned_at": 1788781652046
     },
     {
       "domain": "made-in-design.com",
@@ -576,7 +587,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "network",
-      "scanned_at": 1788180985297
+      "scanned_at": 1788781647211
     },
     {
       "domain": "nelly.com",
@@ -587,7 +598,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788181004492
+      "scanned_at": 1788781656412
     },
     {
       "domain": "perfumeriasprimor.com",
@@ -598,18 +609,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "dns",
-      "scanned_at": 1788181002807
-    },
-    {
-      "domain": "reuter.de",
-      "status": "error",
-      "score": null,
-      "grade": "—",
-      "fails": null,
-      "passes": null,
-      "top_issue": null,
-      "error_code": "blocked_403",
-      "scanned_at": 1788180965211
+      "scanned_at": 1788781653905
     },
     {
       "domain": "wehkamp.nl",
@@ -620,7 +620,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788180994514
+      "scanned_at": 1788781649022
     },
     {
       "domain": "x-kom.pl",
@@ -631,7 +631,7 @@
       "passes": null,
       "top_issue": null,
       "error_code": "blocked_403",
-      "scanned_at": 1788181004242
+      "scanned_at": 1788781655810
     }
   ]
 }
