@@ -1,164 +1,101 @@
-![Cirv Accessibility Index — open WCAG / EAA compliance index for EU e-commerce](assets/banner.png)
+![Nicholas Ashkar — cirv-accessibility-index](assets/nicholas-ashkar/banner.png)
 
-<div align="center">
+# cirv-accessibility-index
 
-**The open compliance index for EU e-commerce — crawler, dataset & self-publishing directory, no ads, no babysitting.**
+Crawls public storefront homepages, stores static accessibility findings and builds a Cirvgreen directory with a read API.
 
-![license](https://img.shields.io/badge/license-MIT-brightgreen?labelColor=0B0A09)
-![node](https://img.shields.io/badge/node-22.x-brightgreen?labelColor=0B0A09)
-![tests](https://img.shields.io/badge/tests-41%20passing-34D399?labelColor=0B0A09)
-![wcag](https://img.shields.io/badge/WCAG-2.1%20A%2FAA-34D399?labelColor=0B0A09)
 
-</div>
 
----
 
-The EU's **European Accessibility Act** is enforceable as of 2025 — online stores selling into the EU must meet WCAG 2.1 AA or face penalties. Yet no one publishes an open, queryable compliance index. This fills that gap.
 
-The **Cirv Accessibility Index** crawls EU e-commerce store homepages, scores them against five WCAG 2.1 A/AA rules, and publishes the results as a ranked leaderboard with a shareable report page per store — engineered to rank in search and get cited by AI assistants.
 
-```
-$ npm run report
 
-dataset: 38 domains  ·  38 latest scores
 
-=== leaderboard (best first) ===
- 80  example.eu           0 fails
- 72  shop.demo.nl         1 fails
- 60  store.sample.de      3 fails
- --  blocked.example.fr   error: blocked_403
 
-ok 35 · skipped 0 · error 3
-```
 
-## Install
 
-```bash
+
+<a id="crawl-the-default-seed-list-into-dataindexdb"></a>
+
+<a id="generate-the-static-directory-into-public"></a>
+
+<a id="or-do-both-in-one-step"></a>
+
+<a id="open-the-result"></a>
+
+<a id="commands"></a>
+
+<a id="crawler-flags"></a>
+
+<a id="build-site-flags"></a>
+
+<a id="what-it-scans"></a>
+
+<a id="data-schema"></a>
+
+<a id="rest-api"></a>
+
+<a id="deploy"></a>
+
+## What it does
+
+- Seeded crawler.
+- SQLite history.
+- Static directory build.
+- API keys and usage limits.
+- Separate liveness/readiness endpoints.
+
+
+
+<a id="install"></a>
+
+<a id="quick-start"></a>
+
+## Quickstart
+
+Prerequisites: Node.js `22.x` and npm. The checkout below pins the source used for this documentation.
+
+```sh
 git clone https://github.com/NickCirv/cirv-accessibility-index.git
 cd cirv-accessibility-index
+git checkout 068719ce5709f958d8ca2b9c9f022d15696fb4a8
 npm install
+npm run report
 ```
 
-## Quick start
+**Expected behavior (illustrative, not captured):** Reads the local SQLite scan store and produces a report; populated scan data is needed for a useful report.
 
-```bash
-# crawl the default seed list into data/index.db
-npm run crawl seeds/eaa-ecommerce.json
+Examples are source-inspected, **not runtime-tested**. See the research record for verification gaps.
 
-# generate the static directory into ./public
-npm run build
 
-# or do both in one step
-npm run refresh
+<a id="what-it-is-not"></a>
 
-# open the result
-open public/index.html
+## Boundaries and data
+
+Static homepage signals do not establish legal compliance or whole-site accessibility. Crawling contacts public sites; optional Firecrawl and Stripe integrations are external services. This review does not verify a live deployment.
+
+
+
+<a id="part-of-the-cirv-suite"></a>
+
+<a id="contributing"></a>
+
+## Development
+
+The manifest defines `npm test` as:
+
+```sh
+node test.js && node api/test.js
 ```
 
-## Commands
+The captured tests cover selected implementation paths; their presence does not establish a passing run. Tests were not run for this documentation revision.
 
-| Command | What it does |
-|---------|--------------|
-| `npm run crawl <seeds.json>` | Crawl a seed list into `data/index.db` |
-| `npm run build` | Generate `./public` from the dataset |
-| `npm run refresh` | Crawl default seeds, then build |
-| `npm run report` | Print leaderboard + error breakdown to stdout |
-| `npm run api` | Start the paid REST API server |
-| `npm test` | Run crawler + API test suites |
+See [implementation and command reference](docs/REFERENCE.md) for the package scripts and inspected interfaces, and [research record](docs/RESEARCH.md) for the pinned source, document decisions and unresolved checks.
 
-### Crawler flags
+Updated [contribution guidance](CONTRIBUTING.md), [security policy](SECURITY.md) and [vendored-engine decision](docs/adr/0001-vendored-engine.md) remain authoritative. Cirvgreen product branding is preserved.
 
-```bash
-node bin/crawl.js seeds/eaa-ecommerce.json [--db path] [--concurrency N] [--no-robots]
-```
+## License and contact
 
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--db <path>` | `data/index.db` | SQLite database path |
-| `--concurrency <N>` | `4` | Parallel requests |
-| `--no-robots` | off | Skip `robots.txt` checks |
+See [LICENSE](LICENSE) for the original terms and attribution. Legal text is unchanged.
 
-### Build-site flags
-
-```bash
-node bin/build-site.js [--db path] [--out dir] [--base url] [--mode soft|named]
-```
-
-| Flag | Description |
-|------|-------------|
-| `--mode named` | Show all store names (default `soft` hides D/F grades behind a CTA) |
-| `--base <url>` | Set canonical base URL for sitemap |
-| `--out <dir>` | Output directory (default `./public`) |
-| `--api-url <url>` | Wire the API CTA to a live endpoint |
-
-## What it scans
-
-Five WCAG 2.1 Level A/AA checks on each store's homepage:
-
-| Check | WCAG | What it catches |
-|-------|------|-----------------|
-| Alt text | 1.1.1 (A) | Images missing text alternatives |
-| Heading hierarchy | 1.3.1 (A) | Missing/duplicate H1, skipped levels |
-| Colour contrast | 1.4.3 (AA) | Inline text/background below 4.5:1 ratio |
-| Form labels | 1.3.1 (A) | Inputs with no programmatic label |
-| Link text | 2.4.4 (A) | Empty or generic ("click here") links |
-
-## Data schema
-
-All scans land in a single SQLite table (`data/index.db`) — append-only, so you get the latest score **and** full history from one place.
-
-| Column | Type | Notes |
-|--------|------|-------|
-| `domain` | TEXT | Normalised (no scheme/`www`) |
-| `status` | TEXT | `ok` · `error` · `skipped` |
-| `score` | INTEGER | 0–100 (null if not `ok`) |
-| `passes` / `fails` / `total` | INTEGER | Check counts |
-| `results_json` | TEXT | Full per-check findings |
-| `error_code` | TEXT | `blocked_403` · `timeout` · `dns` … |
-| `scanned_at` | INTEGER | Epoch ms |
-
-The build step also emits **`public/data.json`** — a machine-readable snapshot suitable for API consumption or AI training.
-
-## REST API
-
-A paid REST API (`api/`) serves the full named dataset. Auth by API key; tiers billed via Stripe.
-
-| Tier | Price | Rate limit |
-|------|-------|-----------|
-| Free | — | 100 req/day |
-| Starter | $29/mo | 5,000/day |
-| Pro | $99/mo | 50,000/day |
-| Bulk | $299/mo | 500,000/day |
-
-Run locally with `npm run api`. Configure via `api/.env.example`. API keys are stored hashed; Stripe secrets are env-only.
-
-Live: [directory](https://cirv-accessibility-index.onrender.com) · [API status](https://cirv-index-api.onrender.com/healthz)
-
-## Deploy
-
-The `public/` directory is prebuilt — no compile step at deploy.
-
-- **Static (any host):** publish `public/` to Netlify, Cloudflare Pages, GitHub Pages, or S3.
-- **Render blueprint:** `render.yaml` is included — New → Blueprint → Apply.
-- **Auto-refresh:** a GitHub Actions workflow (`.github/workflows/refresh.yml`) runs `npm run refresh` on a schedule and commits the updated `public/`.
-
-## What it is NOT
-
-- **Not a full WCAG audit.** Automated tools catch roughly 30–40% of WCAG issues. A score of 100 means no automated failures on the homepage — not guaranteed legal conformance.
-- **Not a bot-protection bypass.** Sites behind Cloudflare/Akamai that block scanners are listed as `error: blocked_403`, never worked around.
-- **Not legal advice.** This is an informational index. Confirm compliance with a qualified accessibility audit.
-
-## Part of the Cirv suite
-
-- **[Cirv Guard](https://wordpress.org/plugins/cirv-guard/)** — the WordPress accessibility plugin that fixes the issues this index surfaces. The WCAG engine in `engine/` is vendored from Cirv Guard's canonical rules (see [`docs/adr/0001`](./docs/adr/0001-vendored-engine.md)).
-- The index is the top of the funnel: awareness → report → scanner → plugin.
-
-## Contributing
-
-PRs welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md). Tests-first, escape untrusted data, stay a polite crawler.
-
----
-
-<div align="center">
-<sub>Node 22 · SQLite · MIT · by <a href="https://cirvgreen.com">Cirvgreen</a> / <a href="https://github.com/NickCirv">NickCirv</a></sub>
-</div>
+[Nicholas Ashkar](https://nicholashkar.com/) · [Discuss a project](https://nicholashkar.com/#oxblood-contact)
